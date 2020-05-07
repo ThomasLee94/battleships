@@ -1,5 +1,5 @@
 ROOT_DIR=$(git rev-parse --show-toplevel)
-DIR="$ROOT_DIR/battleships/src/battleship_service/proto"
+DIR="$ROOT_DIR/battleships-backend/src/battleship_service/proto"
 OUT_DIR="$ROOT_DIR/src/generated/src"
 
 rm -r "$OUT_DIR"
