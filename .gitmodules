@@ -1,3 +1,3 @@
 [submodule "battleships"]
-	path = tash
-    url = https://github.com/ThomasLee94/battleships.git
+	path = battleships
+	url = https://github.com/ThomasLee94/battleships
