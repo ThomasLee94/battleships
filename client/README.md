@@ -1,7 +1,7 @@
 ## Install & Builds for dev
 
 ### Backend
-run `bazel run :server` from `root/backend/src/battleship_service/`
+run `CC=gcc bazel run :server` from `root/backend/src/battleship_service/`
 
 ### Envoy
 
