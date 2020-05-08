@@ -5,7 +5,7 @@ update submodule `git submodule update --remote`
 run `bazel run :echo_server` from `grpc_react/server`
 
 Run the following in `grpc_react/client`
-  - run `npm run generate` to generate stubs
+  - run `npm run generate` to generate stubs. Please add `/* eslint-disable */` at the top of every generated file
 
   - run `npm run setup`
 

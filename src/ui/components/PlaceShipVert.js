@@ -1,20 +1,26 @@
 import React from 'react'
+import './PlaceShipVert.css'
 
 function PlaceShipVert(props) {
+
+    const {type} = props;
+
     return (
-        <form>
-            <label>
+        <form className="PlaceShipVert">
+            <label >
                 row start
-                <input type="start" name="row-start"/>
+                <input type="text" name="row-start"/>
             </label>
-            <label>
+            <label >
                 row end
-                <input type="start" name="row-start"/>
+                <input type="text" name="row-start"/>
             </label>
-            <label>
+            <label >
                 col
-                <input type="start" name="row-start"/>
+                <input type="text" name="row-start"/>
             </label>
+            {/* <button onClick={activateLasers}> Activate Lasers</button> */}
+            <button className="button"> Submit</button>
         </form>
     )
 }

@@ -21,10 +21,14 @@ class App extends Component {
     super()
     const cells = []
 
-    for (let i = 0; i < 100; i += 1) {
-      const type = Math.random() < 0.8 ? 0 : 1
-      const square = new Square(type)
-      cells.push(square)
+    for (let i = 0; i < 10; i += 1) {
+      let row = i+1
+      for (let j = 0; j < 10; j += 1) {
+        let col = j+1
+        const type = col + ":" + row
+        const square = new Square(type)
+        cells.push(square)
+      }
     }
 
     this.state = {
@@ -35,6 +39,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <h2>col:row</h2>
         <PlaceShipVert />
         <Grid cells={this.state.cells} />
       </div>
