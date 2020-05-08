@@ -1,5 +1,7 @@
 ## Install & Builds
 
+if cloning, run ` git submodule update --init`
+
 update submodule `git submodule update --remote`
 
 run `bazel run :echo_server` from `grpc_react/server`
