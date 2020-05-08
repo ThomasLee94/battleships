@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package battleshipservice;
+
+// BoardService
+service BoardService {
+  rpc PlaceShipVert (PlaceShipVertRequest) returns (PlaceShipVertResponse) {}
+  rpc PlaceShipHor (PlaceShipHorRequest) returns (PlaceShipHorResponse) {}
+  rpc FireMissile (FireMissileRequest) returns (FireMissielResponse) {}
+}
+
+message PlaceShipVertRequest{
+  int32 row_start = 1;
+  int32 row_end = 2;
+  int32 col = 3;
+}
+
+message PlaceShipVertResponse{
+  bool status = 1;
+}
+
+message PlaceShipHorRequest{
+  int32 col_start = 1;
+  int32 col_end = 2;
+  int32 row = 3;
+}
+
+message PlaceShipHorResponse{
+  bool status = 1;
+}
+
+message FireMissileRequest{
+  int32 col = 1;
+  int32 row = 2;
+}
+
+message FireMissielResponse{
+  bool status = 1;
+}
+
+// Game Service
+
+// service UnaryService {
+//   rpc BattleShip (BattleShipRequest) returns (BattleShipResponse) {}
+// }
+
+// service ServerStreamingService {
+//   rpc BattleShip (BattleShipRequest) returns (stream BattleShipStreamingResponse) {}
+// }
+
+// message BattleShipRequest {
+//   string message = 1;
+// }
+
+// message BattleShipResponse {
+//   string message = 1;
+// }
+
+// message BattleShipStreamingResponse {
+//   message BattleShipStreamEvent {
+//     string message = 1;
+//   }
+
+//   repeated BattleShipStreamEvent events = 1;
+// }
