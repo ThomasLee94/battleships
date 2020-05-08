@@ -1,4 +1,7 @@
 ## Install & Builds
+
+update submodule `git submodule update --remote`
+
 run `bazel run :echo_server` from `grpc_react/server`
 
 Run the following in `grpc_react/client`

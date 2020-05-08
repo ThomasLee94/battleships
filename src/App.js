@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import Grid from './ui/components/Grid';
+import PlaceShipVert from './ui/components/PlaceShipVert'
 import './App.css';
 
 import { echoServiceEndpointRPC } from './service/EchoService.js';
 
-let output = echoServiceEndpointRPC().then(()=>{}).catch(()=>{})
+// let output = echoServiceEndpointRPC().then(()=>{}).catch(()=>{})
 
 class Square {
   squares = 0;
@@ -34,7 +35,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        {/* add exported function? */}
+        <PlaceShipVert />
         <Grid cells={this.state.cells} />
       </div>
     );
