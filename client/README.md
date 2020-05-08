@@ -1,19 +1,17 @@
-## Install & Builds
+## Install & Builds for dev
 
-if cloning, run ` git submodule update --init`
+### Backend
+run `bazel run :server` from `root/backend/src/battleship_service/`
 
-update submodule `git submodule update --remote`
+### Envoy
 
-<<<<<<< HEAD:client/README.md
-run `bazel run :echo_server` from `battleships-backend/src/server`
+run `./run_envoy.sh` from `root/backend/src/battleship_service` to build and connect proxy layer
 
-run `./run_envoy.sh` from `battleships-backend/src/battleship_service` to build and connect proxy layer
-=======
-run `./run_envoy.sh` to build and connect proxy layer from `root/battleship-backend/src/battleship_service`
+if it doesn't work:
+- run `docker build -t tom/envoy .` from `root/backend/src/battleship_service/envoy`
+- run `docker run -d --network=host tom/envoy ` from `root/backend/src/battleship_service/envoy`
 
-run `bazel run :echo_server` from `root/battleship-backend/src/battleship_service`
->>>>>>> e68b95448c2ce7b764fec9cc1f79d1204e09355f:README.md
-
+### Client
 Run the following in `root`
   - run `npm run generate` to generate stubs. Please add `/* eslint-disable */` at the top of every generated file
 
@@ -25,8 +23,6 @@ Run the following in `root`
 
 [Kubernetes Concepets](https://kubernetes.io/docs/concepts/)
 [gcloud tutorial](https://cloud.google.com/kubernetes-engine/docs/tutorials/hello-app)
-
-
 
 ### `yarn start`
 
