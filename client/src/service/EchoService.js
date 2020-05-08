@@ -11,6 +11,7 @@ export function PlaceShipVertRPC(row_start, row_end, col) {
     request.setRowStart(row_start)
     request.setRowEnd(row_end)
     request.setCol(col)
+    console.log(row_start, row_end, col)
     const call = client.placeShipVert(request, {'custom-header-1': 'value1'},
   (err, response) => {
     if(err) {

@@ -21,8 +21,10 @@ class PlaceShipVert extends React.Component {
         }
 
     submitClick() {
+        console.log("Is this working")
         const {row_start, row_end, col} = this.state
        PlaceShipVertRPC(row_start, row_end, col)
+       console.log("Clicked")
     }
 
     UpdateRowStart(event) {
@@ -49,7 +51,7 @@ class PlaceShipVert extends React.Component {
 
     render() {
         return (
-        <form className="PlaceShipVert">
+        <div className="PlaceShipVert">
             <label >
                 row start
                 <input onChange={this.UpdateRowStart} type="text" name="row-start"/>
@@ -62,8 +64,8 @@ class PlaceShipVert extends React.Component {
                 col
                 <input onChange={this.UpdateCol} type="text" name="row-start"/>
             </label>
-            <button onClick={() => this.submitClick()} className="button"> Submit</button>
-        </form>
+            <button onClick={this.submitClick} className="button"> Submit</button>
+        </div>
         )
     }
 }

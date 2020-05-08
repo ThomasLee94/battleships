@@ -14,7 +14,7 @@ using ::battleshipservice::BattleShipServiceImpl;
 void RunServer() {
   // Build the server
   grpc::ServerBuilder builder;
-  builder.AddListeningPort("localhost:5000", grpc::InsecureServerCredentials());
+  builder.AddListeningPort("localhost:9090", grpc::InsecureServerCredentials());
 
   // Add services
   grpc::EnableDefaultHealthCheckService(true);
