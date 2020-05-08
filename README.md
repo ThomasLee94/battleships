@@ -4,14 +4,14 @@ if cloning, run ` git submodule update --init`
 
 update submodule `git submodule update --remote`
 
-run `bazel run :echo_server` from `grpc_react/server`
+run `./run_envoy.sh` to build and connect proxy layer from `root/battleship-backend/src/battleship_service`
 
-Run the following in `grpc_react/client`
+run `bazel run :echo_server` from `root/battleship-backend/src/battleship_service`
+
+Run the following in `root`
   - run `npm run generate` to generate stubs. Please add `/* eslint-disable */` at the top of every generated file
 
   - run `npm run setup`
-
-  - run `sh run_envoy.sh` to build and connect proxy layer
 
   - run `npm run start`
 
