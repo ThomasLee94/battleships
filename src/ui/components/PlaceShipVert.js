@@ -1,4 +1,5 @@
 import React from 'react'
+import {PlaceShipVertRPC} from '../../service/EchoService'
 import './PlaceShipVert.css'
 
 class PlaceShipVert extends React.Component {
@@ -18,24 +19,41 @@ class PlaceShipVert extends React.Component {
 
     submitClick() {
         this.setState(state => ({
-            // what to do?
+            
+        }))
+    }
+
+    UpdateRowStart(event) {
+        this.setState(state => ({
+            row_start: event.target.value
+        }))
+    }
+
+    UpdateRowEnd(event) {
+        this.setState(state => ({
+            row_end: event.target.value
         }))
     }
    
+    UpdateCol(event) {
+        this.setState(state => ({
+            col: event.target.value
+        }))
+    }
 
     return() {
         <form className="PlaceShipVert">
             <label >
                 row start
-                <input type="text" name="row-start"/>
+                <input onChange={this.UpdateRowStart} type="text" name="row-start"/>
             </label>
             <label >
                 row end
-                <input type="text" name="row-start"/>
+                <input onChange={this.UpdateRowEnd} type="text" name="row-start"/>
             </label>
             <label >
                 col
-                <input type="text" name="row-start"/>
+                <input onChange={this.UpdateCol} type="text" name="row-start"/>
             </label>
             <button onClick={() => this.submitClick()} className="button"> Submit</button>
         </form>

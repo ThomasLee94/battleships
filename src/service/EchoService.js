@@ -6,7 +6,7 @@ import {PlaceShipVertRequest, PlaceShipVertResponse} from '../generated/src/serv
 
 const client = new BoardServiceClient('http://localhost:8080', null, null);
 
-export async function ServiceEndpointRPC() {
+export async function PlaceShipVertRPC() {
     const request = new PlaceShipVertRequest();
     request.setRow_start(2)
     request.setRow_end(4)
