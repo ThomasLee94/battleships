@@ -1,6 +1,5 @@
 #include "src/battleship_service/battleship_service_impl.h"
 #include "src/battleship_game/board.h"
-#include "src/battleship_game/board.cc"
 
 #include "grpc++/grpc++.h"
 
@@ -9,7 +8,7 @@
 
 namespace battleshipservice  {
 
-    board = new Board(10,10);
+    battleship::Board* board = new battleship::Board(10,10);
 
     // instantiate game, not just board?
 
@@ -18,27 +17,27 @@ grpc::Status BattleShipServiceImpl::PlaceShipVert(
     const ::battleshipservice::PlaceShipVertRequest* request,
     ::battleshipservice::PlaceShipVertResponse* response) {
 
-        int row_start = *request->get_row_start();
-        int row_end = *request->get_row_end();
-        int col = *request->get_col();
+        int row_start = request->row_start();
+        int row_end = request->row_end();
+        int col = request->col();
 
-        status = board.PlaceShipVertical(row_start, row_end, col);
-        response.set_message(status)
+        bool status = board->PlaceShipVertical(row_start, row_end, col);
+        response->set_status(status);
 
         return grpc::Status::OK;
 }
 
 grpc::Status BattleShipServiceImpl::PlaceShipHor(
     grpc::ServerContext* context,
-    const ::battleshipservice::PlaceShipVertRequest* request,
-    ::battleshipservice::PlaceShipVertResponse* response) {
+    const ::battleshipservice::PlaceShipHorRequest* request,
+    ::battleshipservice::PlaceShipHorResponse* response) {
 
-        int col_start = *request->get_col_start();
-        int col_end = *request->get_col_end();
-        int row = *request->get_row();
+        int col_start = request->col_start();
+        int col_end = request->col_end();
+        int row = request->row();
 
-        status = board.PlaceShipHorizontal(col_start, col_end, row);
-        response.set_message(status);
+        bool status = board->PlaceShipHorizontal(col_start, col_end, row);
+        response->set_status(status);
         return grpc::Status::OK;
     }
 
@@ -47,11 +46,11 @@ grpc::Status BattleShipServiceImpl::FireMissile(
     const ::battleshipservice::FireMissileRequest* request,
     ::battleshipservice::FireMissileResponse* response) {
 
-        int col = *request->get_col();
-        int row = *request->get_row();
+        int col = request->col();
+        int row = request->row();
 
-        status = board.FireMissile(col, row);
-        response.set_message(status)
+        bool status = board->FireMissile(col, row);
+        response->set_status(status);
         return grpc::Status::OK;
 }
 

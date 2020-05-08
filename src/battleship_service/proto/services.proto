@@ -6,7 +6,7 @@ package battleshipservice;
 service BoardService {
   rpc PlaceShipVert (PlaceShipVertRequest) returns (PlaceShipVertResponse) {}
   rpc PlaceShipHor (PlaceShipHorRequest) returns (PlaceShipHorResponse) {}
-  rpc FireMissile (FireMissileRequest) returns (FireMissielResponse) {}
+  rpc FireMissile (FireMissileRequest) returns (FireMissileResponse) {}
 }
 
 message PlaceShipVertRequest{
@@ -34,7 +34,7 @@ message FireMissileRequest{
   int32 row = 2;
 }
 
-message FireMissielResponse{
+message FireMissileResponse{
   bool status = 1;
 }
 
