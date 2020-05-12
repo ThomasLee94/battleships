@@ -8,16 +8,12 @@
 namespace battleshipservice {
 
 class BattleShipServiceImpl final : public ::battleshipservice::BoardService::Service {
-    grpc::Status PlaceShipVert(
+    grpc::Status StreamShips(
         grpc::ServerContext* context,
-        const ::battleshipservice::PlaceShipVertRequest* request,
-        ::battleshipservice::PlaceShipVertResponse* response) override;
-
-    grpc::Status PlaceShipHor(
-        grpc::ServerContext* context,
-        const ::battleshipservice::PlaceShipHorRequest* request,
-        ::battleshipservice::PlaceShipHorResponse* response) override;
-
+        const ::battleshipservice::PlacedShipStreamReqeust* request,
+        ::battleshipservice::PlacedShipStreamResponse* response) override;
+    )
+    
     grpc::Status FireMissile(
         grpc::ServerContext* context,
         const ::battleshipservice::FireMissileRequest* request,

@@ -4,29 +4,19 @@ package battleshipservice;
 
 // BoardService
 service BoardService {
-  rpc PlaceShipVert (PlaceShipVertRequest) returns (PlaceShipVertResponse) {}
-  rpc PlaceShipHor (PlaceShipHorRequest) returns (PlaceShipHorResponse) {}
   rpc FireMissile (FireMissileRequest) returns (FireMissileResponse) {}
+  rpc StreamPlacedShips (ShowPlacedShipsRequest) returns (stream ShowPlacedShipsResponse) {}
 }
 
-message PlaceShipVertRequest{
-  int32 row_start = 1;
-  int32 row_end = 2;
-  int32 col = 3;
-}
+message ShowPlacedShipsRequest{}
 
-message PlaceShipVertResponse{
-  bool status = 1;
-}
+message ShowPlacedShipsResponse{
+  message StreamEvent {
+    int32 col = 1;
+    int32 row = 2;
+  }
 
-message PlaceShipHorRequest{
-  int32 col_start = 1;
-  int32 col_end = 2;
-  int32 row = 3;
-}
-
-message PlaceShipHorResponse{
-  bool status = 1;
+  repeated StreamEvent events = 1;
 }
 
 message FireMissileRequest{

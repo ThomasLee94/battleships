@@ -2,10 +2,10 @@
 #include <string.h>
 #include <iostream>
 
-#include "battleship/random.h"
-#include "battleship/board.h"
-#include "battleship/player.h"
-#include "battleship/game.h"
+#include "src/battleship_game/random.h"
+#include "src/battleship_game/board.h"
+#include "src/battleship_game/player.h"
+#include "src/battleship_game/game.h"
 
 
 using ::battleship;
