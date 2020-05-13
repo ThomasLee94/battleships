@@ -11,7 +11,7 @@ class Player {
   public:
     Player(const int id, const std::string name);
     const int ID() const;
-    const std::string Name() const;
+    const std::string& Name() const;
     virtual const int * GetBoardSize() const;
     virtual const int * GetShipCoords(const Board& board) const;
     virtual const int * GetMissileCoords(const Board& board) const;

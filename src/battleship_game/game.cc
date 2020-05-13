@@ -5,38 +5,18 @@
 #include <vector>
 #include <string>
 
+#include "src/battleship_game/Event.h"
+
 static const int timestep = 0.5e6;  // Delay to use when sleeping: 1e6 = 1 second
 
 namespace battleship {
+
 
 Game::Game(const int num_players) {
     num_players_ = num_players;
     current_player_ = 0;
     is_started_ = false;
     is_won_ = false;
-    // Initialize vectors of pointers to Player and Board objects
-    players_ = std::vector<Player*>();
-    boards_ = std::vector<Board*>();
-    // Loop over player IDs to initialize each Player and Board object
-    for (int player_id = 0; player_id < num_players_; ++player_id) {
-        // Create a new RandomPlayer with an apt name (Mersenne-Twister generator)
-        const std::string name = (player_id == 0 ? "Mersenne" : "Matsumoto");
-        // Must be reference or pointer to avoid slicing RandomPlayer object as Player
-        Player *player = new RandomPlayer(player_id, name);
-        players_.push_back(player);
-        // Get board size from player: (rows, cols)
-        std::cout << "Asking " << player->Name() << " for board size..." << std::endl;
-        usleep(timestep / 2);  // Sleep before creating board
-        const int *size = player->GetBoardSize();
-        std::cout << "Created board with size: " << size[0] << " rows, " <<
-                                                    size[1] << " columns" << std::endl;
-        // Create a new Board with player-chosen size
-        Board *board = new Board(size[0], size[1]);
-        delete [] size;  // Delete heap-allocated array to avoid memory leak
-        boards_.push_back(board);
-        board->Print();
-        usleep(timestep);  // Sleep after creating board
-    }
 }
 
 Game::~Game() {
@@ -45,6 +25,9 @@ Game::~Game() {
         delete player;
     for (auto board : boards_)
         delete board;
+    for (auto mapping : player_to_boards)
+        delete &mapping;
+ 
 }
 
 void Game::Init() {
@@ -86,6 +69,35 @@ void Game::Init() {
         usleep(2 * timestep);  // Sleep after placing all ships
     }
     is_started_ = true;
+}
+
+EventResult Game::HandleEvent(Event* event) {
+    if (event->GetType() == EventType::PlayerJoined) {
+        return HandlePlayerJoined(static_cast<PlayerJoinedData*>(event->GetData()));
+    }
+    return EventResult(14, "Event type not available.");
+}
+
+EventResult Game::HandlePlayerJoined(PlayerJoinedData* data) {
+
+    if( NumPlayers() >= 2 ){
+        return EventResult(7, "The game is already full.");
+    }
+
+    if(player_to_boards.find(data->GetPlayerName()) != player_to_boards.end()) {
+        return EventResult(7, "The player is already in the game.");
+    }
+    
+    if (!is_started_) {
+        is_started_ = true;
+    }
+
+    Player* player = new Player(NumPlayers(), data->GetPlayerName());
+    Board* board = new Board(10, 10);
+    board->PlaceShipsRandom();
+    player_to_boards.emplace(MapNameToData(player->Name(), PlayerAndBoard(player, board)));
+
+    return EventResult(0, "Successfully added player.");
 }
 
 void Game::Play() {

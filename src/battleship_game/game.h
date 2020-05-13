@@ -2,11 +2,16 @@
 #define GAME_H_
 
 #include <vector>
+#include <map>
 
 #include "player.h"
 #include "board.h"
+#include "src/battleship_game/Event.h"
 
 namespace battleship {
+
+typedef std::pair<Player*, Board*> PlayerAndBoard;
+typedef std::pair<const std::string&, PlayerAndBoard> MapNameToData;
 
 class Game {
   public:
@@ -19,6 +24,8 @@ class Game {
     const bool IsStarted() const;
     const bool IsWon() const;
     const int Winner() const;
+    EventResult HandleEvent(Event* event);
+    EventResult HandlePlayerJoined(PlayerJoinedData* data);
 
   private:
     int num_players_;
@@ -27,6 +34,7 @@ class Game {
     bool is_won_;
     std::vector<Player*> players_;
     std::vector<Board*> boards_;
+    std::map<std::string, PlayerAndBoard> player_to_boards;
 };  // class Game
 
 }  // namespace battleship

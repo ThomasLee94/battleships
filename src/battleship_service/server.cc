@@ -6,6 +6,7 @@
 
 #include "src/battleship_service/proto/services.grpc.pb.h"
 #include "src/battleship_service/battleship_service_impl.h"
+#include "src/battleship_game/game.h"
 // #include "src/battleship_game/game.h"
 
 using ::battleshipservice::BattleShipServiceImpl;
@@ -18,8 +19,9 @@ void RunServer() {
 
   // Add services
   grpc::EnableDefaultHealthCheckService(true);
-
-  BattleShipServiceImpl service;
+  battleship::Game* game = new battleship::Game();
+  
+  BattleShipServiceImpl service(game);
   builder.RegisterService(&service);
 
   // Start the server.

@@ -2,15 +2,25 @@
 #define BOARD_H_
 
 #include <string>
+#include <vector>
 
 namespace battleship {
 
+  struct Ship{
+    std::string type;
+    int start;
+    int stop;
+    int row_or_col;
+  };
+  
 class Board {
   public:
     Board(const int rows, const int cols);
     ~Board();
+
     bool PlaceShipVertical(const int row_start, const int row_end, const int col);
     bool PlaceShipHorizontal(const int row, const int col_start, const int col_end);
+    void PlaceShipsRandom(const int num_ships = 5);
     bool FireMissile(const int row, const int col);
     bool IsInBounds(const int row, const int col) const;
     bool IsFull() const;
@@ -20,6 +30,8 @@ class Board {
     static const std::string CoordStr(const int row, const int col);
     const std::string CellStr(const int row, const int col) const;
     void Print() const;
+
+    std::vector<Ship> PlacedShips;
 
   private:
     const int rows_;

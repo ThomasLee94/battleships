@@ -95,3 +95,10 @@ http_archive(
     strip_prefix = "abseil-cpp-ab3552a18964e7063c8324f45b3896a6a20b08a8",
     url = "https://github.com/abseil/abseil-cpp/archive/ab3552a18964e7063c8324f45b3896a6a20b08a8.zip",
 )
+
+# Exporting bazel compile commands
+http_archive(
+    name = "com_grail_bazel_compdb",
+    strip_prefix = "bazel-compilation-database-master",
+    urls = ["https://github.com/grailbio/bazel-compilation-database/archive/master.tar.gz"],
+)

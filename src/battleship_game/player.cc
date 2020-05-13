@@ -14,7 +14,7 @@ const int Player::ID() const {
     return id_;
 }
 
-const std::string Player::Name() const {
+const std::string& Player::Name() const {
     // return name_;
     return "Player " + std::to_string(id_) + ": " + name_;
 }

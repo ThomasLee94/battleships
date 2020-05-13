@@ -4,19 +4,42 @@ package battleshipservice;
 
 // BoardService
 service BoardService {
+  rpc AddPlayer (AddPlayerRequest) returns (AddPlayerResponse) {}
   rpc FireMissile (FireMissileRequest) returns (FireMissileResponse) {}
-  rpc StreamPlacedShips (ShowPlacedShipsRequest) returns (stream ShowPlacedShipsResponse) {}
+  rpc ShowPlacedShips (ShowPlacedShipsRequest) returns (ShowPlacedShipsResponse) {}
 }
 
-message ShowPlacedShipsRequest{}
+message AddPlayerRequest {
+  string name = 1;
+}
+
+message AddPlayerResponse {
+  string message = 2;
+}
+
+message Board{
+  repeated int32 board = 1;
+}
+
+message VerticalShip {
+  int32 start = 1;
+  int32 stop = 2;
+  int32 col = 3;
+}
+
+message HorizontalShip {
+  int32 start = 1;
+  int32 stop = 2;
+  int32 row = 3;
+}
+
+message ShowPlacedShipsRequest{
+  string boardId = 1;
+}
 
 message ShowPlacedShipsResponse{
-  message StreamEvent {
-    int32 col = 1;
-    int32 row = 2;
-  }
-
-  repeated StreamEvent events = 1;
+  repeated VerticalShip VertShip = 1;
+  repeated HorizontalShip HorShip= 2;
 }
 
 message FireMissileRequest{

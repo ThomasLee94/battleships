@@ -1,4 +1,7 @@
+#include <unistd.h>  // Need usleep function (Unix systems only: Mac and Linux)
+
 #include "board.h"
+#include "src/battleship_game/random.h"
 
 #include <iostream>
 
@@ -62,6 +65,8 @@ bool Board::PlaceShipVertical(const int row_start, const int row_end, const int 
     for (int row = row_start; row <= row_end; ++row) {
         grid_[row][col] = 1;
     }
+    
+    PlacedShips.push_back(Ship{"Vertical", row_start, row_end, col});
     return true;  // Success
 }
 
@@ -85,6 +90,9 @@ bool Board::PlaceShipHorizontal(const int row, const int col_start, const int co
     for (int col = col_start; col <= col_end; ++col) {
         grid_[row][col] = 1;
     }
+    
+
+    PlacedShips.push_back(Ship{"Horizontal", col_start, col_end, row});
     return true;  // Success
 }
 
@@ -179,6 +187,29 @@ void Board::Print() const {
         std::cout << row_str << std::endl;
         std::cout << (row < rows_-1 ? divider : bottom) << std::endl;  // Last row is different
     }
+}
+
+static const int timestep = 1e6;  
+void Board::PlaceShipsRandom(const int num_ships) {
+    // Place ships at random coordinates
+    usleep(2 * timestep);  // Sleep before placing ships
+    RandomGenerator random;
+    int row, col, size, vertical, result, count = 0;
+    std::string orientation;
+    for (int ship = 1; ship <= num_ships; ++ship) {
+        vertical = random.RandomInt(0, 1);  // 0 = horizontal, 1 = vertical
+        size = random.RandomInt(1, (vertical ? Rows() : Cols()));
+        row = random.RandomInt(0, Rows() - (vertical ? size : 1));
+        col = random.RandomInt(0, Cols() - (vertical ? 1 : size));
+        orientation = (vertical ? "vertically" : "horizontally");
+        if (vertical)
+            result = PlaceShipVertical(row, row + size - 1, col);
+        else
+            result = PlaceShipHorizontal(row, col, col + size - 1);
+        count += result;
+        usleep(timestep);  // Sleep after placing ship
+    }
+    usleep(timestep);  // Sleep after placing all ships
 }
 
 }  // namespace battleship
