@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 /**
  * @fileoverview gRPC-Web generated client stub for battleshipservice
  * @enhanceable
@@ -91,148 +89,74 @@ proto.battleshipservice.BoardServicePromiseClient =
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.battleshipservice.PlaceShipVertRequest,
- *   !proto.battleshipservice.PlaceShipVertResponse>}
+ *   !proto.battleshipservice.AddPlayerRequest,
+ *   !proto.battleshipservice.AddPlayerResponse>}
  */
-const methodDescriptor_BoardService_PlaceShipVert = new grpc.web.MethodDescriptor(
-  '/battleshipservice.BoardService/PlaceShipVert',
+const methodDescriptor_BoardService_AddPlayer = new grpc.web.MethodDescriptor(
+  '/battleshipservice.BoardService/AddPlayer',
   grpc.web.MethodType.UNARY,
-  proto.battleshipservice.PlaceShipVertRequest,
-  proto.battleshipservice.PlaceShipVertResponse,
-  /** @param {!proto.battleshipservice.PlaceShipVertRequest} request */
+  proto.battleshipservice.AddPlayerRequest,
+  proto.battleshipservice.AddPlayerResponse,
+  /** @param {!proto.battleshipservice.AddPlayerRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.battleshipservice.PlaceShipVertResponse.deserializeBinary
+  proto.battleshipservice.AddPlayerResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.battleshipservice.PlaceShipVertRequest,
- *   !proto.battleshipservice.PlaceShipVertResponse>}
+ *   !proto.battleshipservice.AddPlayerRequest,
+ *   !proto.battleshipservice.AddPlayerResponse>}
  */
-const methodInfo_BoardService_PlaceShipVert = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.battleshipservice.PlaceShipVertResponse,
-  /** @param {!proto.battleshipservice.PlaceShipVertRequest} request */
+const methodInfo_BoardService_AddPlayer = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.battleshipservice.AddPlayerResponse,
+  /** @param {!proto.battleshipservice.AddPlayerRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.battleshipservice.PlaceShipVertResponse.deserializeBinary
+  proto.battleshipservice.AddPlayerResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.battleshipservice.PlaceShipVertRequest} request The
+ * @param {!proto.battleshipservice.AddPlayerRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.battleshipservice.PlaceShipVertResponse)}
+ * @param {function(?grpc.web.Error, ?proto.battleshipservice.AddPlayerResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.PlaceShipVertResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.AddPlayerResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.battleshipservice.BoardServiceClient.prototype.placeShipVert =
+proto.battleshipservice.BoardServiceClient.prototype.addPlayer =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/battleshipservice.BoardService/PlaceShipVert',
+      '/battleshipservice.BoardService/AddPlayer',
       request,
       metadata || {},
-      methodDescriptor_BoardService_PlaceShipVert,
+      methodDescriptor_BoardService_AddPlayer,
       callback);
 };
 
 
 /**
- * @param {!proto.battleshipservice.PlaceShipVertRequest} request The
+ * @param {!proto.battleshipservice.AddPlayerRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.battleshipservice.PlaceShipVertResponse>}
+ * @return {!Promise<!proto.battleshipservice.AddPlayerResponse>}
  *     A native promise that resolves to the response
  */
-proto.battleshipservice.BoardServicePromiseClient.prototype.placeShipVert =
+proto.battleshipservice.BoardServicePromiseClient.prototype.addPlayer =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/battleshipservice.BoardService/PlaceShipVert',
+      '/battleshipservice.BoardService/AddPlayer',
       request,
       metadata || {},
-      methodDescriptor_BoardService_PlaceShipVert);
-};
-
-
-/**
- * @const
- * @type {!grpc.web.MethodDescriptor<
- *   !proto.battleshipservice.PlaceShipHorRequest,
- *   !proto.battleshipservice.PlaceShipHorResponse>}
- */
-const methodDescriptor_BoardService_PlaceShipHor = new grpc.web.MethodDescriptor(
-  '/battleshipservice.BoardService/PlaceShipHor',
-  grpc.web.MethodType.UNARY,
-  proto.battleshipservice.PlaceShipHorRequest,
-  proto.battleshipservice.PlaceShipHorResponse,
-  /** @param {!proto.battleshipservice.PlaceShipHorRequest} request */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.battleshipservice.PlaceShipHorResponse.deserializeBinary
-);
-
-
-/**
- * @const
- * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.battleshipservice.PlaceShipHorRequest,
- *   !proto.battleshipservice.PlaceShipHorResponse>}
- */
-const methodInfo_BoardService_PlaceShipHor = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.battleshipservice.PlaceShipHorResponse,
-  /** @param {!proto.battleshipservice.PlaceShipHorRequest} request */
-  function(request) {
-    return request.serializeBinary();
-  },
-  proto.battleshipservice.PlaceShipHorResponse.deserializeBinary
-);
-
-
-/**
- * @param {!proto.battleshipservice.PlaceShipHorRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @param {function(?grpc.web.Error, ?proto.battleshipservice.PlaceShipHorResponse)}
- *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.PlaceShipHorResponse>|undefined}
- *     The XHR Node Readable Stream
- */
-proto.battleshipservice.BoardServiceClient.prototype.placeShipHor =
-    function(request, metadata, callback) {
-  return this.client_.rpcCall(this.hostname_ +
-      '/battleshipservice.BoardService/PlaceShipHor',
-      request,
-      metadata || {},
-      methodDescriptor_BoardService_PlaceShipHor,
-      callback);
-};
-
-
-/**
- * @param {!proto.battleshipservice.PlaceShipHorRequest} request The
- *     request proto
- * @param {?Object<string, string>} metadata User defined
- *     call metadata
- * @return {!Promise<!proto.battleshipservice.PlaceShipHorResponse>}
- *     A native promise that resolves to the response
- */
-proto.battleshipservice.BoardServicePromiseClient.prototype.placeShipHor =
-    function(request, metadata) {
-  return this.client_.unaryCall(this.hostname_ +
-      '/battleshipservice.BoardService/PlaceShipHor',
-      request,
-      metadata || {},
-      methodDescriptor_BoardService_PlaceShipHor);
+      methodDescriptor_BoardService_AddPlayer);
 };
 
 
@@ -240,18 +164,18 @@ proto.battleshipservice.BoardServicePromiseClient.prototype.placeShipHor =
  * @const
  * @type {!grpc.web.MethodDescriptor<
  *   !proto.battleshipservice.FireMissileRequest,
- *   !proto.battleshipservice.FireMissielResponse>}
+ *   !proto.battleshipservice.FireMissileResponse>}
  */
 const methodDescriptor_BoardService_FireMissile = new grpc.web.MethodDescriptor(
   '/battleshipservice.BoardService/FireMissile',
   grpc.web.MethodType.UNARY,
   proto.battleshipservice.FireMissileRequest,
-  proto.battleshipservice.FireMissielResponse,
+  proto.battleshipservice.FireMissileResponse,
   /** @param {!proto.battleshipservice.FireMissileRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.battleshipservice.FireMissielResponse.deserializeBinary
+  proto.battleshipservice.FireMissileResponse.deserializeBinary
 );
 
 
@@ -259,15 +183,15 @@ const methodDescriptor_BoardService_FireMissile = new grpc.web.MethodDescriptor(
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
  *   !proto.battleshipservice.FireMissileRequest,
- *   !proto.battleshipservice.FireMissielResponse>}
+ *   !proto.battleshipservice.FireMissileResponse>}
  */
 const methodInfo_BoardService_FireMissile = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.battleshipservice.FireMissielResponse,
+  proto.battleshipservice.FireMissileResponse,
   /** @param {!proto.battleshipservice.FireMissileRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.battleshipservice.FireMissielResponse.deserializeBinary
+  proto.battleshipservice.FireMissileResponse.deserializeBinary
 );
 
 
@@ -276,9 +200,9 @@ const methodInfo_BoardService_FireMissile = new grpc.web.AbstractClientBase.Meth
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.battleshipservice.FireMissielResponse)}
+ * @param {function(?grpc.web.Error, ?proto.battleshipservice.FireMissileResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.FireMissielResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.FireMissileResponse>|undefined}
  *     The XHR Node Readable Stream
  */
 proto.battleshipservice.BoardServiceClient.prototype.fireMissile =
@@ -297,7 +221,7 @@ proto.battleshipservice.BoardServiceClient.prototype.fireMissile =
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.battleshipservice.FireMissielResponse>}
+ * @return {!Promise<!proto.battleshipservice.FireMissileResponse>}
  *     A native promise that resolves to the response
  */
 proto.battleshipservice.BoardServicePromiseClient.prototype.fireMissile =
@@ -307,6 +231,80 @@ proto.battleshipservice.BoardServicePromiseClient.prototype.fireMissile =
       request,
       metadata || {},
       methodDescriptor_BoardService_FireMissile);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.battleshipservice.ShowPlacedShipsRequest,
+ *   !proto.battleshipservice.ShowPlacedShipsResponse>}
+ */
+const methodDescriptor_BoardService_ShowPlacedShips = new grpc.web.MethodDescriptor(
+  '/battleshipservice.BoardService/ShowPlacedShips',
+  grpc.web.MethodType.UNARY,
+  proto.battleshipservice.ShowPlacedShipsRequest,
+  proto.battleshipservice.ShowPlacedShipsResponse,
+  /** @param {!proto.battleshipservice.ShowPlacedShipsRequest} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.battleshipservice.ShowPlacedShipsResponse.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.battleshipservice.ShowPlacedShipsRequest,
+ *   !proto.battleshipservice.ShowPlacedShipsResponse>}
+ */
+const methodInfo_BoardService_ShowPlacedShips = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.battleshipservice.ShowPlacedShipsResponse,
+  /** @param {!proto.battleshipservice.ShowPlacedShipsRequest} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.battleshipservice.ShowPlacedShipsResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.battleshipservice.ShowPlacedShipsRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.battleshipservice.ShowPlacedShipsResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.ShowPlacedShipsResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.battleshipservice.BoardServiceClient.prototype.showPlacedShips =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/battleshipservice.BoardService/ShowPlacedShips',
+      request,
+      metadata || {},
+      methodDescriptor_BoardService_ShowPlacedShips,
+      callback);
+};
+
+
+/**
+ * @param {!proto.battleshipservice.ShowPlacedShipsRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.battleshipservice.ShowPlacedShipsResponse>}
+ *     A native promise that resolves to the response
+ */
+proto.battleshipservice.BoardServicePromiseClient.prototype.showPlacedShips =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/battleshipservice.BoardService/ShowPlacedShips',
+      request,
+      metadata || {},
+      methodDescriptor_BoardService_ShowPlacedShips);
 };
 
 

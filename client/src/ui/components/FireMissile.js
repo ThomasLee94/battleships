@@ -1,46 +1,35 @@
 import React from 'react'
-import {PlaceShipVertRPC} from '../../service/EchoService'
+import {FireMissileRPC} from '../../service/BattleShipService'
 import './PlaceShipVert.css'
 
-class PlaceShipVert extends React.Component {
+class FireMissile extends React.Component {
     constructor(props) {
         super(props);
           this.state = {
             row: 0,
-            row_start: 0,
-            row_end: 0,
-            col: 0,
-            col_start: 0,
-            col_end: 0
+            col: 0
           };
 
           this.submitClick = this.submitClick.bind(this)
-          this.UpdateRowStart = this.UpdateRowStart.bind(this)
-          this.UpdateRowEnd = this.UpdateRowEnd.bind(this)
+          this.UpdateRow = this.UpdateRow.bind(this)
           this.UpdateCol = this.UpdateCol.bind(this)
         }
 
     submitClick() {
-        console.log("Is this working")
-        const {row_start, row_end, col} = this.state
-       PlaceShipVertRPC(row_start, row_end, col)
-       console.log("Clicked")
+        const {row, col} = this.state
+        FireMissileRPC(row, col)
+        // clear state?
+        console.log("Clicked")
     }
 
-    UpdateRowStart(event) {
+    UpdateRow(event) {
         event.persist()
         console.log(event)
         this.setState(state => ({
-            row_start: event.target.value
+            row: event.target.value
         }))
     }
 
-    UpdateRowEnd(event) {
-        event.persist()
-        this.setState(state => ({
-            row_end: event.target.value
-        }))
-    }
    
     UpdateCol(event) {
         event.persist()
@@ -51,14 +40,10 @@ class PlaceShipVert extends React.Component {
 
     render() {
         return (
-        <div className="PlaceShipVert">
+        <div className="FireMissile">
             <label >
-                row start
+                row 
                 <input onChange={this.UpdateRowStart} type="text" name="row-start"/>
-            </label>
-            <label >
-                row end
-                <input onChange={this.UpdateRowEnd} type="text" name="row-start"/>
             </label>
             <label >
                 col
@@ -70,4 +55,4 @@ class PlaceShipVert extends React.Component {
     }
 }
 
-export default PlaceShipVert
+export default FireMissile

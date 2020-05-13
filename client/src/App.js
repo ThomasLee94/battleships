@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import Grid from './ui/components/Grid';
-import PlaceShipVert from './ui/components/PlaceShipVert'
+import FireMissile from './ui/components/FireMissile'
 import './App.css';
 
-import { echoServiceEndpointRPC } from './service/EchoService.js';
+import { echoServiceEndpointRPC } from './service/BattleShipService.js/index.js';
 
 // let output = echoServiceEndpointRPC().then(()=>{}).catch(()=>{})
 
@@ -40,7 +40,7 @@ class App extends Component {
     return (
       <div className="App">
         <h2>col:row</h2>
-        <PlaceShipVert />
+        <FireMissile />
         <Grid cells={this.state.cells} />
       </div>
     );

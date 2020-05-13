@@ -1,3 +1,3 @@
-import EchoService from '.EchoService'
+import BattleShipService from '.EchoService'
 
-export {EchoService}
+export {BattleShipService}
