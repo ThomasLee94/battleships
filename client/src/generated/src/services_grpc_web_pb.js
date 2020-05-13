@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 /**
  * @fileoverview gRPC-Web generated client stub for battleshipservice
  * @enhanceable
@@ -5,8 +7,6 @@
  */
 
 // GENERATED CODE -- DO NOT EDIT!
-
-
 
 const grpc = {};
 grpc.web = require('grpc-web');
@@ -305,6 +305,80 @@ proto.battleshipservice.BoardServicePromiseClient.prototype.showPlacedShips =
       request,
       metadata || {},
       methodDescriptor_BoardService_ShowPlacedShips);
+};
+
+
+/**
+ * @const
+ * @type {!grpc.web.MethodDescriptor<
+ *   !proto.battleshipservice.CreateGameRequest,
+ *   !proto.battleshipservice.CreateGameResponse>}
+ */
+const methodDescriptor_BoardService_CreateGame = new grpc.web.MethodDescriptor(
+  '/battleshipservice.BoardService/CreateGame',
+  grpc.web.MethodType.UNARY,
+  proto.battleshipservice.CreateGameRequest,
+  proto.battleshipservice.CreateGameResponse,
+  /** @param {!proto.battleshipservice.CreateGameRequest} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.battleshipservice.CreateGameResponse.deserializeBinary
+);
+
+
+/**
+ * @const
+ * @type {!grpc.web.AbstractClientBase.MethodInfo<
+ *   !proto.battleshipservice.CreateGameRequest,
+ *   !proto.battleshipservice.CreateGameResponse>}
+ */
+const methodInfo_BoardService_CreateGame = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.battleshipservice.CreateGameResponse,
+  /** @param {!proto.battleshipservice.CreateGameRequest} request */
+  function(request) {
+    return request.serializeBinary();
+  },
+  proto.battleshipservice.CreateGameResponse.deserializeBinary
+);
+
+
+/**
+ * @param {!proto.battleshipservice.CreateGameRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @param {function(?grpc.web.Error, ?proto.battleshipservice.CreateGameResponse)}
+ *     callback The callback function(error, response)
+ * @return {!grpc.web.ClientReadableStream<!proto.battleshipservice.CreateGameResponse>|undefined}
+ *     The XHR Node Readable Stream
+ */
+proto.battleshipservice.BoardServiceClient.prototype.createGame =
+    function(request, metadata, callback) {
+  return this.client_.rpcCall(this.hostname_ +
+      '/battleshipservice.BoardService/CreateGame',
+      request,
+      metadata || {},
+      methodDescriptor_BoardService_CreateGame,
+      callback);
+};
+
+
+/**
+ * @param {!proto.battleshipservice.CreateGameRequest} request The
+ *     request proto
+ * @param {?Object<string, string>} metadata User defined
+ *     call metadata
+ * @return {!Promise<!proto.battleshipservice.CreateGameResponse>}
+ *     A native promise that resolves to the response
+ */
+proto.battleshipservice.BoardServicePromiseClient.prototype.createGame =
+    function(request, metadata) {
+  return this.client_.unaryCall(this.hostname_ +
+      '/battleshipservice.BoardService/CreateGame',
+      request,
+      metadata || {},
+      methodDescriptor_BoardService_CreateGame);
 };
 
 

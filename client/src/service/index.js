@@ -1,3 +1,3 @@
-import BattleShipService from '.EchoService'
+import BattleShipService from './BattleShipService.js'
 
-export {BattleShipService}
+export {BattleShipService};

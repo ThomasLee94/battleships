@@ -53,9 +53,10 @@ grpc::Status BattleShipServiceImpl::FireMissile(
         grpc::ServerContext* context,
         const ::battleshipservice::AddPlayerRequest* request,
         ::battleshipservice::AddPlayerResponse* response) {
+            std::string game_id = request->gameid();
             std::string name = request->name();
-            battleship::PlayerJoinedEvent e(name);
-            battleship::EventResult result = game_->HandleEvent(&e);
+            battleship::PlayerJoinedEvent e(game_id, name);
+            battleship::EventResult result = manager_->HandleEvent(&e);
 
             response->set_message(result.GetMessage());
             return grpc::Status::OK;

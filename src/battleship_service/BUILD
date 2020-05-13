@@ -10,7 +10,7 @@ cc_library(
             ],
     deps = [
         "//src/battleship_service/proto:services_grpc_proto",
-        "//src/battleship_game:game",
+        "//src/battleship_game:manager",
         "//src/battleship_game:event",
         "@com_github_grpc_grpc//:grpc++",
         "//src/util:status_macros"
@@ -23,7 +23,7 @@ cc_binary(
     srcs = ["server.cc"],
     deps = [
         ":battleship_service_impl",
-        "//src/battleship_game:game",
+        "//src/battleship_game:manager",
         "@com_github_grpc_grpc//:grpc++",
         "//src/battleship_service/proto:services_grpc_proto",
         "@com_github_grpc_grpc//:grpc++_reflection",

@@ -11,14 +11,6 @@ static const int timestep = 0.5e6;  // Delay to use when sleeping: 1e6 = 1 secon
 
 namespace battleship {
 
-
-Game::Game(const int num_players) {
-    num_players_ = num_players;
-    current_player_ = 0;
-    is_started_ = false;
-    is_won_ = false;
-}
-
 Game::~Game() {
     // Delete heap-allocated Player and Board objects to avoid memory leak
     for (auto player : players_)
@@ -39,8 +31,6 @@ void Game::Init() {
         const Player& player = *players_.at(player_id);
         Board& board = *boards_.at(player_id);
         const int num_ships = board.Rows() * board.Cols() / 6;
-        std::cout << "Asking " << player.Name() << " to place " << num_ships << " ships..." << std::endl;
-        usleep(timestep);  // Sleep before placing ships
         int row, col, size, vertical, result;
         std::string orientation;
         for (int ship = 1; ship <= num_ships; ) {
@@ -53,20 +43,13 @@ void Game::Init() {
             vertical = ship_coords[3];
             delete [] ship_coords;  // Delete heap-allocated array to avoid memory leak
             orientation = (vertical ? "vertically" : "horizontally");
-            std::cout << "Placing ship #" << ship << " with size " << size <<
-                " " << orientation << " at " << Board::CoordStr(row, col);
             // Place ship at player-chosen coordinates
             if (vertical)
                 result = board.PlaceShipVertical(row, row + size - 1, col);
             else
                 result = board.PlaceShipHorizontal(row, col, col + size - 1);
             ship += result;  // Advance to next ship only if placement succeeded
-            std::cout << " -> " << (result ? "succeeded" : "failed") << std::endl;
-            board.Print();
-            usleep(timestep / 2);  // Sleep after placing ship
         }
-        std::cout << player.Name() << " placed " << num_ships << " ships" << std::endl << std::endl;
-        usleep(2 * timestep);  // Sleep after placing all ships
     }
     is_started_ = true;
 }
@@ -107,9 +90,6 @@ void Game::Play() {
         const int next_player = (current_player_ + 1) % num_players_;
         const Player& player = *players_.at(current_player_);  // Current player
         Board& board = *boards_.at(next_player);  // Fire at next player's board
-        // Ask current player for coordinates to fire missile on opponent's board
-        std::cout << "Asking " << player.Name() << " to fire missile..." << std::endl;
-        usleep(timestep / 2);  // Sleep before firing missile
         // Get missile coordinates from player: (row, col)
         const int *missile_coords = player.GetMissileCoords(board);
         // Unpack missile coordinates from returned array
@@ -119,8 +99,6 @@ void Game::Play() {
         std::cout << "Firing missile at " << Board::CoordStr(row, col);
         // Fire missile at player-chosen coordinates
         const bool result = board.FireMissile(row, col);
-        std::cout << " -> " << (result ? "HIT" : "MISS") << std::endl;
-        board.Print();
         // usleep(timestep / 2);  // Sleep after firing missile
         // Check if opponent's board is full
         if (board.IsFull()) {
@@ -157,5 +135,7 @@ const int Game::Winner() const {
     }
     return -1;  // No winner
 }
+
+
 
 }  // namespace battleship

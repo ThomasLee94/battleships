@@ -8,7 +8,9 @@ namespace battleship {
     // Event types to be used when registering an event with the engine.
     enum class EventType {
         None = 0,
-        PlayerJoined
+        PlayerJoined,
+        CreateGame,
+        JoinGame
     };
 
     class EventData {
@@ -16,12 +18,15 @@ namespace battleship {
 
     class Event {
         public:
+            explicit Event(std::string game_id) : game_id_(game_id) {}
             virtual EventType GetType() const = 0;
             virtual void* GetData() = 0;
             
             void SetHandled(bool handled) { is_handled_ = handled; }
+            std::string GetGameID() { return game_id_; }
         private:
             bool is_handled_;
+            std::string game_id_;
     };
 
 
@@ -47,7 +52,7 @@ namespace battleship {
 
     class PlayerJoinedEvent : public Event {
         public:
-            explicit PlayerJoinedEvent(const std::string& name) {
+            explicit PlayerJoinedEvent(std::string game_id, const std::string& name) : Event(game_id) {
                 data_ = new PlayerJoinedData(name);
             }
             EventType GetType() const override { return EventType::PlayerJoined; }
@@ -58,6 +63,12 @@ namespace battleship {
         
 
     };
+
+    // TODO(tom) create new event for game
+    class CreateNewGame : public Event {
+        public:
+            explicit CreateNewGame()
+    }
 
 }
 

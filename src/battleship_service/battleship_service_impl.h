@@ -4,14 +4,14 @@
 #include "grpc++/grpc++.h"
 
 #include "src/battleship_service/proto/services.grpc.pb.h"
-#include "src/battleship_game/game.h"
+#include "src/battleship_game/manager.h"
 
 namespace battleshipservice {
 
 class BattleShipServiceImpl final : public ::battleshipservice::BoardService::Service {
     public: 
-        explicit BattleShipServiceImpl(battleship::Game* game) :  game_(game){}
-        battleship::Game* game_;
+        explicit BattleShipServiceImpl(battleship::Manager* manager) :  manager_(manager){}
+        battleship::Manager* manager_;
 
     grpc::Status ShowPlacedShips(
         grpc::ServerContext* context,

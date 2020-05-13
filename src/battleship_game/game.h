@@ -11,11 +11,10 @@
 namespace battleship {
 
 typedef std::pair<Player*, Board*> PlayerAndBoard;
-typedef std::pair<const std::string&, PlayerAndBoard> MapNameToData;
+typedef std::pair<std::string, PlayerAndBoard> MapNameToData;
 
 class Game {
   public:
-    explicit Game(const int num_players = 2);
     ~Game();
     void Init();
     void Play();
@@ -28,10 +27,10 @@ class Game {
     EventResult HandlePlayerJoined(PlayerJoinedData* data);
 
   private:
-    int num_players_;
-    int current_player_;
-    bool is_started_;
-    bool is_won_;
+    int num_players_ = 0;
+    int current_player_ = 0;
+    bool is_started_ = false;
+    bool is_won_ = false;
     std::vector<Player*> players_;
     std::vector<Board*> boards_;
     std::map<std::string, PlayerAndBoard> player_to_boards;

@@ -7,10 +7,22 @@ service BoardService {
   rpc AddPlayer (AddPlayerRequest) returns (AddPlayerResponse) {}
   rpc FireMissile (FireMissileRequest) returns (FireMissileResponse) {}
   rpc ShowPlacedShips (ShowPlacedShipsRequest) returns (ShowPlacedShipsResponse) {}
+  rpc CreateGame (CreateGameRequest) returns (CreateGameResponse) {}
+  // TODO(tom) Create game backend & frontend
+}
+
+message CreateGameRequest {
+  string name = 1;
+}
+  
+message CreateGameResponse {
+  string gameId = 1;
+  string message = 2;
 }
 
 message AddPlayerRequest {
-  string name = 1;
+  string gameId = 1;
+  string name = 2;
 }
 
 message AddPlayerResponse {

@@ -11,14 +11,14 @@ class Player {
   public:
     Player(const int id, const std::string name);
     const int ID() const;
-    const std::string& Name() const;
+    std::string Name() const;
     virtual const int * GetBoardSize() const;
     virtual const int * GetShipCoords(const Board& board) const;
     virtual const int * GetMissileCoords(const Board& board) const;
 
   private:
     const int id_;
-    const std::string name_;
+    std::string name_;
 };  // class Player
 
 class RandomPlayer : public Player {
@@ -30,7 +30,7 @@ class RandomPlayer : public Player {
 
   private:
     const int id_;
-    const std::string name_;
+    std::string name_;
 };  // class RandomPlayer
 
 }  // namespace battleship

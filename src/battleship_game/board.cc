@@ -189,10 +189,8 @@ void Board::Print() const {
     }
 }
 
-static const int timestep = 1e6;  
 void Board::PlaceShipsRandom(const int num_ships) {
     // Place ships at random coordinates
-    usleep(2 * timestep);  // Sleep before placing ships
     RandomGenerator random;
     int row, col, size, vertical, result, count = 0;
     std::string orientation;
@@ -207,9 +205,7 @@ void Board::PlaceShipsRandom(const int num_ships) {
         else
             result = PlaceShipHorizontal(row, col, col + size - 1);
         count += result;
-        usleep(timestep);  // Sleep after placing ship
     }
-    usleep(timestep);  // Sleep after placing all ships
 }
 
 }  // namespace battleship

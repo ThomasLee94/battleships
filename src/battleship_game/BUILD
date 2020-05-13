@@ -41,6 +41,15 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "manager",
+    hdrs = ["manager.h"],
+    deps = [
+        ":game",
+        ":event"
+    ]
+)
+
 cc_binary(
     name = "main",
     srcs = ["main.cc"],

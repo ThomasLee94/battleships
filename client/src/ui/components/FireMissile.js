@@ -1,6 +1,6 @@
 import React from 'react'
-import {FireMissileRPC} from '../../service/BattleShipService'
-import './PlaceShipVert.css'
+import {BattleShipService} from '../../service'
+import './FireMissile.css'
 
 class FireMissile extends React.Component {
     constructor(props) {
@@ -17,8 +17,8 @@ class FireMissile extends React.Component {
 
     submitClick() {
         const {row, col} = this.state
-        FireMissileRPC(row, col)
-        // clear state?
+        BattleShipService.FireMissileRPC(row, col)
+        // clear state
         console.log("Clicked")
     }
 
