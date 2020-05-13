@@ -50,8 +50,8 @@ namespace battleship {
             explicit PlayerJoinedEvent(const std::string& name) {
                 data_ = new PlayerJoinedData(name);
             }
-            virtual EventType GetType() const override { return EventType::PlayerJoined; }
-            virtual void* GetData() override { return data_; }
+            EventType GetType() const override { return EventType::PlayerJoined; }
+            void* GetData() override { return data_; }
             
         private:
             PlayerJoinedData* data_;
