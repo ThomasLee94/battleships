@@ -60,7 +60,7 @@ EventResult Game::HandleEvent(Event* event) {
 
 EventResult Game::HandlePlayerJoined(PlayerJoinedData* data) {
 
-    if( NumPlayers() >= 2 ){
+    if( NumPlayers() == 2 ){
         return EventResult(7, "The game is already full.");
     }
 
@@ -76,6 +76,7 @@ EventResult Game::HandlePlayerJoined(PlayerJoinedData* data) {
     Board* board = new Board(10, 10);
     board->PlaceShipsRandom();
     player_to_boards.emplace(MapNameToData(player->Name(), PlayerAndBoard(player, board)));
+    ++num_players_;
 
     return EventResult(0, "Successfully added player.");
 }

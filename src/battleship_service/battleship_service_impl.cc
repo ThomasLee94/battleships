@@ -53,12 +53,12 @@ grpc::Status BattleShipServiceImpl::CreateGame(
         grpc::ServerContext* context,
         const ::battleshipservice::CreateGameRequest* request,
         ::battleshipservice::CreateGameResponse* response) {
-            std::string game_id = request->gameid();
             std::string name = request->name();
 
-            battleship::CreateGameEvent e()  
+            battleship::CreateGameEvent e;  
             battleship::EventResult result = manager_->HandleEvent(&e);
 
+            response->set_gameid(result.GetGameId());
             response->set_message(result.GetMessage());
             return grpc::Status::OK;
 

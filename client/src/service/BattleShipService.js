@@ -1,10 +1,63 @@
 /* eslint-disabled */
 //@ts-nocheck
 
-import {BoardServiceClient} from '../generated/src/services_grpc_web_pb';
-import {ShowPlacedShipsRequest, ShowPlacedShipsReponse, AddPlayerRequest, AddPlayerResponse, FireMissileRequest, FireMissileResponse} from '../generated/src/services_pb'
+import { BoardServiceClient } from '../generated/src/services_grpc_web_pb';
+import {
+  CreateGameRequest,
+  CreateGameResponse,
+  AddPlayerRequest, 
+  AddPlayerResponse, 
+  ShowPlacedShipsRequest, 
+  ShowPlacedShipsReponse, 
+  FireMissileRequest,
+  FireMissileResponse
+} from '../generated/src/services_pb'
 
 const client = new BoardServiceClient('http://localhost:8080', null, null);
+
+function CreateGame(name = "yeet") {
+  const request = new CreateGameRequest();
+  request.setName(name);
+
+  const call = client.createGame(request, {'custom-header-1': 'value1'},
+  (err, response) => {
+    if(err) {
+      console.log(err)
+    }
+    console.log(response.getMessage());
+    console.log(response.getGameid());
+    AddPlayerRPC(response.getGameid());
+    console.log("here")
+    AddPlayerRPC(response.getGameid());
+    AddPlayerRPC(response.getGameid(),"extra user");
+    AddPlayerRPC(response.getGameid(),"extra user");
+    AddPlayerRPC(response.getGameid(),"extra user");
+
+  });
+  call.on('status', (status) => {
+  });
+}
+
+
+
+function AddPlayerRPC(gameID, name = "yeet") {
+  const request = new AddPlayerRequest();
+  request.setGameid(gameID);
+  request.setName(name);
+
+  const call = client.addPlayer(request, {'custom-header-1': 'value1'},
+  (err, response) => {
+    if(err) {
+      console.log(err)
+    }
+    console.log(response.getMessage());
+    console.log(name);
+  });
+  call.on('status', (status) => {
+    console.log(status)
+  // ...
+  });
+}
 
 function ShowBoardRPC(row, col) {
   const request = new ShowPlacedShipsRequest();
@@ -25,22 +78,6 @@ call.on('status', (status) => {
   return 
 }
 
-function AddPlayerRPC(name = "yeet") {
-  const request = new AddPlayerRequest();
-  request.setGameid("test");
-  request.setName(name);
-
-  const call = client.addPlayer(request, {'custom-header-1': 'value1'},
-  (err, response) => {
-    if(err) {
-      console.log(err)
-    }
-    console.log(response.getMessage());
-  });
-  call.on('status', (status) => {
-  // ...
-  });
-}
 
 function FireMissileRPC(row, col) {
   const request = new FireMissileRequest();
@@ -66,10 +103,10 @@ call.on('status', (status) => {
   // create game rpc
 
   // join game rpc
-
-AddPlayerRPC()
+  CreateGame();
 export default {
-  FireMissileRPC,
+  CreateGame,
   AddPlayerRPC,
-  ShowBoardRPC
+  ShowBoardRPC,
+  FireMissileRPC,
 }

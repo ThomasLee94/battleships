@@ -9,12 +9,6 @@
 #include "src/battleship_game/Event.h"
 #include "src/battleship_game/game.h"
 
-namespace internal {
-
- 
-
-}
-
 namespace battleship {
 
     typedef std::map<std::string, Game*> GameIDsToGames;

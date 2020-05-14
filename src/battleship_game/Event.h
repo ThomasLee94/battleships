@@ -66,11 +66,9 @@ namespace battleship {
         
     };
 
-    // TODO(tom) create new event for game
     class CreateGameEvent : public Event {
         public:
-        // TODO: FIX ERROR - below doesnt compile
-            CreatGameEvent() : Event("") {}
+            CreateGameEvent() : Event("") {}
             EventType GetType() const override { return EventType::CreateGame; }
             void* GetData() override { return nullptr; }
     };

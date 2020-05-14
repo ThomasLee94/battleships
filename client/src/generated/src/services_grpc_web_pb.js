@@ -1,12 +1,14 @@
 /* eslint-disable */
 
-/**
+ /**
  * @fileoverview gRPC-Web generated client stub for battleshipservice
  * @enhanceable
  * @public
  */
 
 // GENERATED CODE -- DO NOT EDIT!
+
+
 
 const grpc = {};
 grpc.web = require('grpc-web');
@@ -383,4 +385,3 @@ proto.battleshipservice.BoardServicePromiseClient.prototype.createGame =
 
 
 module.exports = proto.battleshipservice;
-
