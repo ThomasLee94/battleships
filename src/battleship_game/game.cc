@@ -1,13 +1,10 @@
 #include "game.h"
 
-#include <unistd.h>  // Need usleep function (Unix systems only: Mac and Linux)
 #include <iostream>
 #include <vector>
 #include <string>
 
 #include "src/battleship_game/Event.h"
-
-static const int timestep = 0.5e6;  // Delay to use when sleeping: 1e6 = 1 second
 
 namespace battleship {
 
@@ -96,14 +93,11 @@ void Game::Play() {
         const int row = missile_coords[0];
         const int col = missile_coords[1];
         delete [] missile_coords;  // Delete heap-allocated array to avoid memory leak
-        std::cout << "Firing missile at " << Board::CoordStr(row, col);
         // Fire missile at player-chosen coordinates
         const bool result = board.FireMissile(row, col);
         // usleep(timestep / 2);  // Sleep after firing missile
         // Check if opponent's board is full
         if (board.IsFull()) {
-            // TODO: Determine if a player has won the game
-            std::cout << "GAME OVER: " << player.Name() << " won the game!!!" << std::endl;
             is_won_ = true;
             break;
         }

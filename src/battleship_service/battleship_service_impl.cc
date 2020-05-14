@@ -49,19 +49,34 @@ grpc::Status BattleShipServiceImpl::FireMissile(
         return grpc::Status::OK;
 }
 
-    grpc::Status BattleShipServiceImpl::AddPlayer(
+grpc::Status BattleShipServiceImpl::CreateGame(
         grpc::ServerContext* context,
-        const ::battleshipservice::AddPlayerRequest* request,
-        ::battleshipservice::AddPlayerResponse* response) {
+        const ::battleshipservice::CreateGameRequest* request,
+        ::battleshipservice::CreateGameResponse* response) {
             std::string game_id = request->gameid();
             std::string name = request->name();
-            battleship::PlayerJoinedEvent e(game_id, name);
+
+            battleship::CreateGameEvent e()  
             battleship::EventResult result = manager_->HandleEvent(&e);
 
             response->set_message(result.GetMessage());
             return grpc::Status::OK;
 
-        }
+}
+
+grpc::Status BattleShipServiceImpl::AddPlayer(
+    grpc::ServerContext* context,
+    const ::battleshipservice::AddPlayerRequest* request,
+    ::battleshipservice::AddPlayerResponse* response) {
+        std::string game_id = request->gameid();
+        std::string name = request->name();
+        battleship::PlayerJoinedEvent e(game_id, name);
+        battleship::EventResult result = manager_->HandleEvent(&e);
+
+        response->set_message(result.GetMessage());
+        return grpc::Status::OK;
+
+}
 
 }  // namespace battleshipservice
 

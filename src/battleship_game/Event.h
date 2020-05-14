@@ -36,9 +36,12 @@ namespace battleship {
                     status_code_(status_code), message_(message) {}
             int GetStatusCode() { return status_code_; }
             const std::string& GetMessage() { return message_; }
+            void SetGameId(std::string gameId) { game_id_ = gameId; }
+            std::string GetGameId() { return game_id_; }
         private:
             int status_code_;
             std::string message_;
+            std::string game_id_;
 
     };
 
@@ -61,15 +64,17 @@ namespace battleship {
         private:
             PlayerJoinedData* data_;
         
-
     };
 
     // TODO(tom) create new event for game
-    class CreateNewGame : public Event {
+    class CreateGameEvent : public Event {
         public:
-            explicit CreateNewGame()
-    }
+        // TODO: FIX ERROR - below doesnt compile
+            CreatGameEvent() : Event("") {}
+            EventType GetType() const override { return EventType::CreateGame; }
+            void* GetData() override { return nullptr; }
+    };
 
-}
+};
 
 #endif 

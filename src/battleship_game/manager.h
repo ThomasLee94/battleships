@@ -33,7 +33,7 @@ namespace battleship {
                 std::generate_n( str.begin(), length, randchar );
                 return str;
             }
-            
+
             EventResult HandleEvent(Event* event) {
                 if (event->GetType() == EventType::CreateGame) {
                     std::string game_id = random_string(10);
@@ -41,7 +41,9 @@ namespace battleship {
                         game_id = random_string(10);
                     }
                     game_mappings_.emplace(std::pair<std::string, Game*>(game_id, new Game()));
-                    return EventResult(2, "Created Game ID");
+                    EventResult er = EventResult(2, "Created Game ID");
+                    er.SetGameId(game_id);
+                    return er;
                 } else {
                     GameIDsToGames::iterator it = game_mappings_.find(event->GetGameID());
                     if (it == game_mappings_.end()) {

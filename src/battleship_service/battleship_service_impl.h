@@ -23,6 +23,11 @@ class BattleShipServiceImpl final : public ::battleshipservice::BoardService::Se
         grpc::ServerContext* context,
         const ::battleshipservice::FireMissileRequest* request,
         ::battleshipservice::FireMissileResponse* response) override;
+
+    grpc::Status CreateGame(
+        grpc::ServerContext* context,
+        const ::battleshipservice::CreateGameRequest* request,
+        ::battleshipservice::CreateGameResponse* response) override;
  
     grpc::Status AddPlayer(
         grpc::ServerContext* context,
