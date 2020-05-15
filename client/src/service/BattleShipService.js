@@ -26,9 +26,7 @@ function CreateGameRPC(name, callback) {
   });
 }
 
-
-
-function AddPlayerRPC(gameID, name = "yeet", callback) {
+function AddPlayerRPC(gameID, name, callback) {
   const request = new AddPlayerRequest();
   request.setGameid(gameID);
   request.setName(name);
@@ -63,7 +61,7 @@ call.on('status', (status) => {
 // ...
 });
   
-  console.log('yeet')
+  console.log('yeet in show board rpc')
   return 
 }
 
@@ -88,11 +86,6 @@ call.on('status', (status) => {
   return 
 }
 
-// game manager
-  // create game rpc
-
-  // join game rpc
-  // CreateGame();
 export default {
   CreateGameRPC,
   AddPlayerRPC,

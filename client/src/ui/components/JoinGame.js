@@ -15,7 +15,7 @@ class JoinGame extends React.Component {
 
     submitClick() {
         const {gameID} = this.state
-        BattleShipService.AddPlayerRPC(gameID)
+        BattleShipService.AddPlayerRPC(this.props.name, gameID, this.props.startGame)
         console.log("Clicked")
     }
 
@@ -30,9 +30,9 @@ class JoinGame extends React.Component {
     render() {
         return (
         <div className="CreateGame">
-            <label >
-                GameId
-                <input onChange={this.UpdateGameId} type="text" />
+            <label className="label">
+                Game ID
+                <input className="input" onChange={this.UpdateGameId} type="text" />
             </label>
             <button onClick={this.submitClick} className="button"> Submit</button>
         </div>

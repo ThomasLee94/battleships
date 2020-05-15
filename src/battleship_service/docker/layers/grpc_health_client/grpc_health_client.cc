@@ -7,7 +7,7 @@
 #include "grpc++/grpc++.h"
 #include "src/proto/grpc/health/v1/health.grpc.pb.h"
 
-#include "server/util/flags.h"
+#include "src/util/flags.h"
 
 ABSL_FLAG(std::string, server, "localhost:50051", "");
 

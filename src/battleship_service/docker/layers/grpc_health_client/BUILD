@@ -6,7 +6,7 @@ cc_binary(
     deps = [
         #FIXME: https://github.com/grpc/grpc/issues/20828
         "@com_github_grpc_grpc//src/proto/grpc/health/v1:health_proto",
-        "//server/util:flags",
+        "//src/util:flags",
         "@com_github_abseil_absl//absl/flags:flag",
         "@com_github_abseil_absl//absl/time",
         "@com_github_google_glog//:glog",

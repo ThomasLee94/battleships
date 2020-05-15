@@ -30,9 +30,9 @@ class CreateGame extends React.Component {
     render() {
         return (
         <div className="CreateGame">
-            <label >
-                Your name 
-                <input onChange={this.UpdateRowStart} type="text" />
+            <label className="label">
+                Your name    
+                <input className="input" onChange={this.UpdateRowStart} type="text" />
             </label>
             <button onClick={this.submitClick} className="button"> Create Game Room</button>
         </div>

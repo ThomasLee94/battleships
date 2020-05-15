@@ -30,6 +30,15 @@ cc_binary(
     ],
 )
 
+load("@io_bazel_rules_docker//cc:image.bzl", "cc_image")
+
+cc_image(
+    name = "image",
+    args = ["--logtostderr"],
+    base = "//src/battleship_service/docker/images:cc_image",
+    binary = ":server",
+)
+
 ## Replace workspace_name and dir_path as per your setup.
 
 

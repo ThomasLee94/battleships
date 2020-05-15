@@ -4,8 +4,6 @@ import Grid from './ui/components/Grid';
 import FireMissile from './ui/components/FireMissile'
 import InitPage from './ui/components/InitPage'
 
-import './App.css';
-
 class Square {
   squares = 0;
   constructor(type) {
@@ -48,11 +46,12 @@ class App extends Component {
   }
 
   render() {
-    if (this.state.gameID) {
+    if (this.state.gameID.length > 1) {
       return(
         <div className="App">
             <h2>col:row</h2>
             <FireMissile />
+            <Grid cells={this.state.cells} />
             <Grid cells={this.state.cells} />
         </div>
       );
