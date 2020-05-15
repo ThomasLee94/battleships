@@ -3,35 +3,23 @@
 
 import { BoardServiceClient } from '../generated/src/services_grpc_web_pb';
 import {
-  CreateGameRequest,
-  CreateGameResponse,
-  AddPlayerRequest, 
-  AddPlayerResponse, 
-  ShowPlacedShipsRequest, 
-  ShowPlacedShipsReponse, 
-  FireMissileRequest,
-  FireMissileResponse
+  CreateGameRequest, CreateGameResponse,
+  AddPlayerRequest, AddPlayerResponse, 
+  ShowPlacedShipsRequest, ShowPlacedShipsReponse, 
+  FireMissileRequest, FireMissileResponse
 } from '../generated/src/services_pb'
 
 const client = new BoardServiceClient('http://localhost:8080', null, null);
 
-function CreateGame(name = "yeet") {
+function CreateGameRPC(name, callback) {
   const request = new CreateGameRequest();
-  request.setName(name);
 
   const call = client.createGame(request, {'custom-header-1': 'value1'},
   (err, response) => {
     if(err) {
       console.log(err)
     }
-    console.log(response.getMessage());
-    console.log(response.getGameid());
-    AddPlayerRPC(response.getGameid());
-    console.log("here")
-    AddPlayerRPC(response.getGameid());
-    AddPlayerRPC(response.getGameid(),"extra user");
-    AddPlayerRPC(response.getGameid(),"extra user");
-    AddPlayerRPC(response.getGameid(),"extra user");
+    return AddPlayerRPC(response.getGameid(), name, callback)
 
   });
   call.on('status', (status) => {
@@ -40,7 +28,7 @@ function CreateGame(name = "yeet") {
 
 
 
-function AddPlayerRPC(gameID, name = "yeet") {
+function AddPlayerRPC(gameID, name = "yeet", callback) {
   const request = new AddPlayerRequest();
   request.setGameid(gameID);
   request.setName(name);
@@ -52,6 +40,7 @@ function AddPlayerRPC(gameID, name = "yeet") {
     }
     console.log(response.getMessage());
     console.log(name);
+    return callback(gameID, name)
   });
   call.on('status', (status) => {
     console.log(status)
@@ -103,9 +92,9 @@ call.on('status', (status) => {
   // create game rpc
 
   // join game rpc
-  CreateGame();
+  // CreateGame();
 export default {
-  CreateGame,
+  CreateGameRPC,
   AddPlayerRPC,
   ShowBoardRPC,
   FireMissileRPC,
