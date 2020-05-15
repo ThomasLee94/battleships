@@ -31,7 +31,7 @@ admin:
                 routes:
                 - match: { prefix: "/" }
                   route:
-                    cluster: echo_service
+                    cluster: battleship_service
                     max_grpc_timeout: 0s
                 cors:
                   allow_origin_string_match:
