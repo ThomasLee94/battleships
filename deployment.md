@@ -14,7 +14,7 @@
 
 `kubectl get pods`
 
-`gcloud container clusters get-credentials cluster-2 --zone us-west1-a --project battleship-react-backend`
+`gcloud container clusters get-credentials cluster-1 --zone us-west1-a --project battleship-react-backend`
 
 `kubectl apply -f infra/microservices/server/deployment.yaml`
 
