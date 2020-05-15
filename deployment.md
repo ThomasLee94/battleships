@@ -23,9 +23,9 @@
 
 `bazel build -c opt src/battleship_service/edge_envoy:image_envoy.tar`
 
-`docker load -i bazel-bin/server/edge_envoy/image_envoy.tar`
+`docker load -i bazel-bin/src/battleship_service/edge_envoy/image_envoy.tar`
 
-run image locally - `docker run bazel/server/edge_envoy:image_envoy`
+run image locally - `docker run bazel/src/battleship_service/edge_envoy:image_envoy`
 
 `docker tag bazel/server/edge_envoy:image_envoy gcr.io/battleship-react-backend/edge-envoy:v1.14.1`
 
