@@ -4,7 +4,7 @@
 
 `bazel build -c opt src/battleship_service/docker/...`
 
-`bazel build -c opt src:image.tar`
+`bazel build -c opt src/battleship_service:image.tar`
 
 `docker load -i bazel-bin/server/image.tar`
 
