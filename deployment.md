@@ -31,7 +31,7 @@ run image locally - `docker run bazel/src/battleship_service/edge_envoy:image_en
 
 `docker push gcr.io/battleship-react-backend/edge-envoy:v1.14.1`
 
-`kubectl apply -f server/edge_envoy/deployment.yaml`
+`kubectl apply -f infra/microservices/edge_envoy/deployment.yaml`
 
 `kubectl apply -f infra/microservices/server/service.yaml`
 
