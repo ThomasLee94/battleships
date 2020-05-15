@@ -6,9 +6,9 @@
 
 `bazel build -c opt src/battleship_service:image.tar`
 
-`docker load -i bazel-bin/server/image.tar`
+`docker load -i bazel-bin/src/battleship_service/image.tar`
 
-`docker tag bazel/server:image gcr.io/battleship-react-backend/server:latest`
+`docker tag bazel/src/battleship_service:image gcr.io/battleship-react-backend/server:latest`
 
 `docker push gcr.io/battleship-react-backend/server:latest`
 
