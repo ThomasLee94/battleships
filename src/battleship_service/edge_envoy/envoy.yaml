@@ -27,7 +27,7 @@ listeners:
                   inline_string: 'ok'
                 status: 200
           - name: local_service
-            domains: ["edge.gloofoo.xyz"]
+            domains: ["edge.gloofizz.xyz"]
             routes:
             - match: { prefix: "/" }
               route:

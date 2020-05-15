@@ -49,6 +49,11 @@ function AddPlayerRPC(gameID, name, callback) {
 function ShowBoardRPC(row, col) {
   const request = new ShowPlacedShipsRequest();
   let boardId = request.getBoardId()
+
+  let coordinatesVert = response.getVertShip()
+  let coordinatesHor = response.getHorShip()
+
+
   
   const call = client.showPlacedShips(request, {'custom-header-1': 'value1'},
 (err, response) => {

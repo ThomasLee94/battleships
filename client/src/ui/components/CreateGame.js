@@ -32,7 +32,7 @@ class CreateGame extends React.Component {
         <div className="CreateGame">
             <label className="label">
                 Your name    
-                <input className="input" onChange={this.UpdateRowStart} type="text" />
+                <input className="input" onChange={this.UpdateName} type="text" />
             </label>
             <button onClick={this.submitClick} className="button"> Create Game Room</button>
         </div>
