@@ -7,18 +7,11 @@
 
 namespace battleship {
 
-Board::Board(const int rows, const int cols)
-        : rows_(rows), cols_(cols) {
-    // grid_ = new int[rows_][cols_]();
-    // This should initialize a contiguous 2D array but throws a compiler error:
-    // "only the first dimension of an allocated array may have dynamic size"
-
-    // Instead we need to initialize an array of pointers to scattered row arrays
-    // Code to create 2D array adapted from https://stackoverflow.com/a/936702
-    grid_ = new int*[rows_]();
+int** CreateNewGrid(int rows_, int cols_) {
+    int** grid = new int*[rows_]();
     for (int row = 0; row < rows_; ++row) {
         // Initialize each row to an array of ints
-        grid_[row] = new int[cols_]();
+        grid[row] = new int[cols_]();
         // Need () to initialize grid cells to zero or values will be uninitialized
         // Code to initialize row adapted from https://stackoverflow.com/a/16239446
         // Without () above, we need to loop over columns to initialize each cell
@@ -27,13 +20,26 @@ Board::Board(const int rows, const int cols)
         //     grid_[row][col] = 0;
         // }
     }
+    return grid;
+}
 
+Board::Board(const int rows, const int cols)
+        : rows_(rows), cols_(cols) {
+    // grid_ = new int[rows_][cols_]();
+    // This should initialize a contiguous 2D array but throws a compiler error:
+    // "only the first dimension of an allocated array may have dynamic size"
+
+    // Instead we need to initialize an array of pointers to scattered row arrays
+    // Code to create 2D array adapted from https://stackoverflow.com/a/936702
+    grid_ = CreateNewGrid(rows_, cols_);
     // It is possible to dynamically allocate a contiguous 2D block of memory
     // where rows and columns vary at runtime and preserve 2-subscript access.
     // Example code found in this answer: https://stackoverflow.com/a/29375830
 
     // Alternative pseudo-2D array solution: https://stackoverflow.com/a/28841507
 }
+
+
 
 Board::~Board() {
     // Code to delete 2D array adapted from https://stackoverflow.com/a/936709
@@ -66,7 +72,6 @@ bool Board::PlaceShipVertical(const int row_start, const int row_end, const int 
         grid_[row][col] = 1;
     }
     
-    PlacedShips.push_back(Ship{"Vertical", row_start, row_end, col});
     return true;  // Success
 }
 
@@ -90,9 +95,7 @@ bool Board::PlaceShipHorizontal(const int row, const int col_start, const int co
     for (int col = col_start; col <= col_end; ++col) {
         grid_[row][col] = 1;
     }
-    
 
-    PlacedShips.push_back(Ship{"Horizontal", col_start, col_end, row});
     return true;  // Success
 }
 
@@ -108,6 +111,26 @@ bool Board::FireMissile(const int row, const int col) {
     grid_[row][col] = -1;
     return false;  // Miss
 }
+
+int** Board::ShowGrid(bool is_owner) {
+    if (is_owner) {
+        return grid_;
+    }
+
+    int** target_grid = CreateNewGrid(rows_, cols_);
+    for (int row = 0; row < rows_; ++row) {
+        for (int col = 0; col < cols_; ++col) {
+            if (grid_[row][col] == -1 ) {
+                target_grid[row][col] = -1;
+            } else {
+                target_grid[row][col] = 0;
+            }
+
+        }       
+    }
+    return target_grid;
+}
+
 
 bool Board::IsInBounds(const int row, const int col) const {
     // Ensure given coordinates are each valid indexes (within bounds of grid)

@@ -13,6 +13,12 @@ class BattleShipServiceImpl final : public ::battleshipservice::BoardService::Se
         explicit BattleShipServiceImpl(battleship::Manager* manager) :  manager_(manager){}
         battleship::Manager* manager_;
 
+    grpc::Status PollGame(
+        grpc::ServerContext* context,
+        const ::battleshipservice::PollGameRequest* request,
+        ::battleshipservice::PollGameResponse* response) override;
+    
+
     grpc::Status ShowPlacedShips(
         grpc::ServerContext* context,
         const ::battleshipservice::ShowPlacedShipsRequest* request,

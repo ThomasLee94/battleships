@@ -52,10 +52,32 @@ void Game::Init() {
 }
 
 EventResult Game::HandleEvent(Event* event) {
+    if (event->GetType() == EventType::PollGame) {
+        return HandlePollGame();
+    }
+
     if (event->GetType() == EventType::PlayerJoined) {
         return HandlePlayerJoined(static_cast<PlayerJoinedData*>(event->GetData()));
     }
+
+    if (event->GetType() == EventType::ShowPlacedShip) {
+        return HandleShowShip(static_cast<ShowPlacedShipData*>(event->GetData()));
+    }
+
     return EventResult(14, "Event type not available.");
+}
+
+EventResult Game::HandleShowShip(ShowPlacedShipData* data) {
+
+    bool is_owner = data->GetPlayerName() == data->GetTargetName();
+
+    auto pair = player_to_boards.find(data->GetTargetName());
+
+    Board* board = pair->second.second;
+    int** grid = board->ShowGrid(is_owner);
+    EventResult e(0, "Successfully obtained the board");
+    e.SetGrid(grid);
+    return e;
 }
 
 EventResult Game::HandlePlayerJoined(PlayerJoinedData* data) {
@@ -79,6 +101,16 @@ EventResult Game::HandlePlayerJoined(PlayerJoinedData* data) {
     ++num_players_;
 
     return EventResult(0, "Successfully added player.");
+}
+
+EventResult Game::HandlePollGame() {
+    EventResult e(0, "Successfully obtained the board");
+
+    e.SetIsWon(is_won_);
+    for (auto pair : player_to_boards) {
+        e.AddPlayer(pair.first);
+    }
+    return e;
 }
 
 void Game::Play() {

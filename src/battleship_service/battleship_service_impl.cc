@@ -16,23 +16,47 @@
 
 namespace battleshipservice  {
 
+grpc::Status BattleShipServiceImpl::PollGame(
+    grpc::ServerContext* context,
+        const ::battleshipservice::PollGameRequest* request,
+        ::battleshipservice::PollGameResponse* response) {
+
+        std::string id = request->gameid();
+        
+        battleship::PollGameEvent e(id);  
+        battleship::EventResult result = manager_->HandleEvent(&e);
+     
+        response->set_iswon(result.GetIsWon());
+        
+        for (std::string player_name : result.GetPlayers()) {
+            response->add_players(player_name);
+        }
+        
+        return grpc::Status::OK;
+}
+
 
 grpc::Status BattleShipServiceImpl::ShowPlacedShips(
     grpc::ServerContext* context,
         const ::battleshipservice::ShowPlacedShipsRequest* request,
         ::battleshipservice::ShowPlacedShipsResponse* response) {
 
-    // make request to see ships on board
-        // get their specific board
-        // iterate through PlaceShip vector 
-            //  Convert struct into proto message dependant on type
-        // add all ship proto messages to response
-        // send it back
-
-        std::string id = request->boardid();
-        if (id=="1") {
+        std::string id = request->gameid();
+        std::string player_name = request->currentuser();
+        std::string target_name = request->targetuser();
+        
+        battleship::ShowPlacedShipEvent e(id, player_name, target_name);  
+        battleship::EventResult result = manager_->HandleEvent(&e);
+     
+        int** grid = result.GetGrid();
+        for (int row = 0; row < 10; ++row) {
+            ::battleshipservice::Row* row_ptr = response->add_grid();
+            for (int col = 0; col < 10; ++col) {
+                row_ptr->add_col(grid[row][col]);
+            }       
         }
 
+        response->set_message(result.GetMessage());
         return grpc::Status::OK;
 }
 

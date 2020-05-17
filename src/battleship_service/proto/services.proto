@@ -8,6 +8,7 @@ service BoardService {
   rpc FireMissile (FireMissileRequest) returns (FireMissileResponse) {}
   rpc ShowPlacedShips (ShowPlacedShipsRequest) returns (ShowPlacedShipsResponse) {}
   rpc CreateGame (CreateGameRequest) returns (CreateGameResponse) {}
+  rpc PollGame (PollGameRequest) returns (PollGameResponse) {}
 }
 
 message CreateGameRequest {
@@ -45,12 +46,18 @@ message HorizontalShip {
 }
 
 message ShowPlacedShipsRequest{
-  string boardId = 1;
+  string gameId = 1;
+  string currentuser = 2;
+  string targetuser = 3;
+}
+
+message Row {
+  repeated int32 col = 1;
 }
 
 message ShowPlacedShipsResponse{
-  repeated VerticalShip VertShip = 1;
-  repeated HorizontalShip HorShip= 2;
+  string message = 2;
+  repeated Row grid = 1;
 }
 
 message FireMissileRequest{
@@ -60,6 +67,16 @@ message FireMissileRequest{
 
 message FireMissileResponse{
   bool status = 1;
+}
+
+message PollGameRequest {
+  string gameId = 1;
+}
+
+message PollGameResponse {
+  repeated string players = 1;
+  bool isWon = 2;
+
 }
 
 // Game Service

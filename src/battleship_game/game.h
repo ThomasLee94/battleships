@@ -25,6 +25,8 @@ class Game {
     const int Winner() const;
     EventResult HandleEvent(Event* event);
     EventResult HandlePlayerJoined(PlayerJoinedData* data);
+    EventResult HandleShowShip(ShowPlacedShipData* data);
+    EventResult HandlePollGame();
 
   private:
     int num_players_ = 0;

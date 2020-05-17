@@ -4,6 +4,12 @@ import Grid from './ui/components/Grid';
 import FireMissile from './ui/components/FireMissile'
 import InitPage from './ui/components/InitPage'
 
+import { BoardServiceClient } from 'generated/src/services_grpc_web_pb';
+
+import {
+  PollGameRequest,
+} from "generated/src/services_pb"
+
 class Square {
   squares = 0;
   constructor(type) {
@@ -15,7 +21,6 @@ class Square {
 
 class App extends Component {
   constructor() {
-    
     super()
     const cells = []
 
@@ -36,13 +41,36 @@ class App extends Component {
     }
 
     this.startGame = this.startGame.bind(this)
+    this.client = new BoardServiceClient('http://localhost:8080', null, null);
+
   }
 
-  startGame(name, gameId) {
+
+  startGame(gameId, name) {
     this.setState({
       gameID: gameId,
       name: name
     })
+
+    setInterval(this.PollGameRPC.bind(this), 10000)
+  }
+
+  PollGameRPC() {
+    const request = new PollGameRequest();
+    request.setGameid(this.state.gameID);
+  
+    const call = this.client.pollGame(request, {'custom-header-1': 'value1'},
+    (err, response) => {
+      if(err) {
+        console.log(err)
+      }
+      console.log(response.getPlayersList());
+    
+    });
+    call.on('status', (status) => {
+      console.log(status)
+    // ...
+    });
   }
 
   render() {
@@ -51,14 +79,15 @@ class App extends Component {
         <div className="App">
             <h2>col:row</h2>
             <FireMissile />
-            <Grid cells={this.state.cells} />
-            <Grid cells={this.state.cells} />
+            {/* passing client down to components in props */}
+            <Grid {...this.state} client={this.client} />
+            <Grid {...this.state} client={this.client} />
         </div>
       );
     } else {
       return (
         <div className="App">
-          <InitPage startGame={this.startGame} />
+          <InitPage startGame={this.startGame} client={this.client} />
         </div>
       );
 

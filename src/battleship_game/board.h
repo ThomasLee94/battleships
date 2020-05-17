@@ -30,8 +30,7 @@ class Board {
     static const std::string CoordStr(const int row, const int col);
     const std::string CellStr(const int row, const int col) const;
     void Print() const;
-
-    std::vector<Ship> PlacedShips;
+    int** ShowGrid(bool is_owner);
 
   private:
     const int rows_;
