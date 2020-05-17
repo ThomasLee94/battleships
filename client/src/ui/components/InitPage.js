@@ -13,7 +13,8 @@ class InitPage extends React.Component {
         super(props);
 
         this.state = {
-            name: ""
+            name: "",
+            gameID: ""
         }
 
           this.submitClick = this.submitClick.bind(this)
@@ -22,6 +23,7 @@ class InitPage extends React.Component {
 
     CreateGameRPC(callback) {
         const request = new CreateGameRequest();
+        request.setName(this.state.name);
         
         const call = this.props.client.createGame(request, {'custom-header-1': 'value1'},
         (err, response) => {
@@ -55,7 +57,7 @@ class InitPage extends React.Component {
         });
       }
     
-        submitClick() {
+    submitClick() {
         this.CreateGameRPC(this.props.startGame)
         console.log("Clicked")
     }
@@ -66,6 +68,19 @@ class InitPage extends React.Component {
         this.setState(state => ({
             name: event.target.value
         }))
+    }
+
+    UpdateGameId(event) {
+        event.persist()
+        console.log(event)
+        this.setState(state => ({
+            gameID: event.target.value
+        }))
+    }
+    submitJoinGame() {
+        const {gameID} = this.state
+        this.AddPlayerRPC(this.state.name, gameID, this.props.joinGame)
+        console.log("Clicked")
     }
 
     render() {
@@ -81,7 +96,14 @@ class InitPage extends React.Component {
                     </label>
                     <button onClick={this.submitClick} className="button"> Create Game Room</button>
                 </div>
-                <JoinGame {...this.props}/>
+            
+                <div className="CreateGame">
+                    <label className="label">
+                        Game ID
+                        <input className="input" onChange={this.UpdateGameId.bind(this)} type="text" />
+                    </label>
+                    <button onClick={this.submitJoinGame.bind(this)} className="button"> Submit</button>
+                </div>
             </div>
         )   
     }

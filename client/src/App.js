@@ -22,22 +22,14 @@ class Square {
 class App extends Component {
   constructor() {
     super()
-    const cells = []
 
-    for (let i = 0; i < 10; i += 1) {
-      let row = i+1
-      for (let j = 0; j < 10; j += 1) {
-        let col = j+1
-        const type = col + ":" + row
-        const square = new Square(type)
-        cells.push(square)
-      }
-    }
 
     this.state = {
-      cells,
       gameID: "",
-      name: ""
+      player: "",
+      otherPlayer: "",
+      isWon: false,
+      grids: []
     }
 
     this.startGame = this.startGame.bind(this)
@@ -45,14 +37,18 @@ class App extends Component {
 
   }
 
-
-  startGame(gameId, name) {
+  startGame(gameID, player) {
     this.setState({
-      gameID: gameId,
-      name: name
+      gameID,
+      player,
     })
+    console.log(this.state.player)
+    setInterval(this.PollGameRPC.bind(this), 3000)
+  }
 
-    setInterval(this.PollGameRPC.bind(this), 10000)
+  joinGame(gameID, player) {
+    this.startGame(gameID, player);
+    this.PollGameRPC();
   }
 
   PollGameRPC() {
@@ -64,14 +60,29 @@ class App extends Component {
       if(err) {
         console.log(err)
       }
-      console.log(response.getPlayersList());
-    
+      // console.log(response.getPlayersList());
+      let otherPlayer;
+      let players = response.getPlayersList();
+      for (let idx in players) {
+        if (players[idx] !== this.state.player) {
+          otherPlayer = players[idx];
+        }
+      }
+      console.log(otherPlayer);
+      this.setState({
+        otherPlayer,
+        isWon: response.getIswon(),
+      })
+
+
     });
     call.on('status', (status) => {
       console.log(status)
     // ...
     });
   }
+
+  RenderGrids
 
   render() {
     if (this.state.gameID.length > 1) {
@@ -80,14 +91,15 @@ class App extends Component {
             <h2>col:row</h2>
             <FireMissile />
             {/* passing client down to components in props */}
-            <Grid {...this.state} client={this.client} />
-            <Grid {...this.state} client={this.client} />
+            {this.state.gameID}
+            {this.state.player && <Grid {...this.state} client={this.client} owner={this.state.player}></Grid>}
+            {this.state.otherPlayer && <Grid {...this.state} client={this.client} owner={this.state.otherPlayer}></Grid>}
         </div>
       );
     } else {
       return (
         <div className="App">
-          <InitPage startGame={this.startGame} client={this.client} />
+          <InitPage startGame={this.startGame} joinGame={this.joinGame.bind(this)} client={this.client} />
         </div>
       );
 

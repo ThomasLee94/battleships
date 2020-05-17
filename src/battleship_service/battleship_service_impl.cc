@@ -31,7 +31,7 @@ grpc::Status BattleShipServiceImpl::PollGame(
         for (std::string player_name : result.GetPlayers()) {
             response->add_players(player_name);
         }
-        
+
         return grpc::Status::OK;
 }
 
@@ -77,14 +77,20 @@ grpc::Status BattleShipServiceImpl::CreateGame(
         grpc::ServerContext* context,
         const ::battleshipservice::CreateGameRequest* request,
         ::battleshipservice::CreateGameResponse* response) {
-            std::string name = request->name();
+    if (request->name() == ""){
+        return grpc::Status::CANCELLED;
+    }
 
-            battleship::CreateGameEvent e;  
-            battleship::EventResult result = manager_->HandleEvent(&e);
+    std::string name = request->name();
+            
 
-            response->set_gameid(result.GetGameId());
-            response->set_message(result.GetMessage());
-            return grpc::Status::OK;
+
+    battleship::CreateGameEvent e;  
+    battleship::EventResult result = manager_->HandleEvent(&e);
+
+    response->set_gameid(result.GetGameId());
+    response->set_message(result.GetMessage());
+    return grpc::Status::OK;
 
 }
 

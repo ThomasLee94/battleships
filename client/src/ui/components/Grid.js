@@ -11,20 +11,25 @@ class Grid extends React.Component {
   constructor(props) {
     super(props);
 
-    const { cells } = props
     this.state = {
-        array: cells.map((cell) => <Cell type={cell.type} />)
+        cells: [],
     }
-    this.ShowBoardRPC(props.name)
+    this.ShowBoardRPC()
+    setInterval(this.ShowBoardRPC.bind(this), 2000)
     }
 
-    ShowBoardRPC(targetUser) {
+    ShowBoardRPC() {
+
+      if (this.props.owner === "") {
+          return;  
+      }
+
       const request = new ShowPlacedShipsRequest();
 
       request.setGameid(this.props.gameID)
-      console.log(this.props.gameID)
-      request.setTargetuser(targetUser)
-      request.setCurrentuser(this.props.name)
+      console.log(this.props.gameID);
+      request.setTargetuser(this.props.owner)
+      request.setCurrentuser(this.props.player)
     
       const call = this.props.client.showPlacedShips(request, {'custom-header-1': 'value1'},
     (err, response) => {
@@ -35,24 +40,53 @@ class Grid extends React.Component {
       // console.log("COORDINATES", response.getGridList())
 
       // for object in coordinates
-      let coordinatesLength = response.getGridList().length;
-      let arr = response.getGridList()
-      for (let i = 0; i < 5; i++) {
-        console.log( arr[i])
+      let boardLength = response.getGridList().length;
+      let rowArray = response.getGridList();
+      let cellArray = []
+
+      for (let i = 0; i < boardLength; i++) {
+        let row = rowArray[i];
+        console.log(row.getColList());
+        cellArray.push(row.getColList());
       }
+
+      this.setState({
+
+        cells: cellArray.map(row => {
+          let cellRow = [];
+          const isOwner = this.props.owner === this.props.player;
+          for (let col in row) {
+            let style = {};
+            console.log(isOwner)
+            if (row[col] === -1) {
+              style = {backgroundColor: "red", color: ""}
+            } else if (row[col] === 1) {
+              style = {backgroundColor: "blue", color: "blue !important"}
+            } else {
+              style = {backgroundColor: "white"}
+            }
+
+              cellRow.push(<Cell type={row[col]} style={{...style}} />)
+          }
+          return cellRow;
+        })
+      })
     });
     call.on('status', (status) => {
     // ...
     });
-      
-      console.log('yeet in show board rpc')
-      return 
     }
 
     render() {
+      
+      if (this.props.owner === "") {
+        return (<></>)
+      }
+      
+      
       return (
         <div className="Grid">
-          {this.state.array}
+          {this.state.cells}
         </div>
       )
     }
