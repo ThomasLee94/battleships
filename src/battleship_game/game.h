@@ -29,6 +29,7 @@ class Game {
     EventResult HandlePollGame();
     EventResult HandleFireMissile(FireMissileData* data);
 
+
   private:
     int num_players_ = 0;
     int current_player_ = 0;

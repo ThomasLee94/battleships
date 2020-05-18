@@ -15,6 +15,7 @@ namespace battleship {
         ShowPlacedShip,
         PollGame,
         FireMissile
+
     };
 
     class EventData {
@@ -152,6 +153,7 @@ namespace battleship {
             FireMissileData* data_;
 
     };
+
 
 };
 

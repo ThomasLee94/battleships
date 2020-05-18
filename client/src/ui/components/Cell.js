@@ -45,6 +45,5 @@ class Cell extends React.Component {
         </div>
       )
     }
-}
-
+  }
 export default Cell

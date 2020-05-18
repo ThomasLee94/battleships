@@ -21,10 +21,9 @@
 
 //   // Add services
 //   grpc::EnableDefaultHealthCheckService(true);
-  
+
 //   battleship::Manager* manager = new battleship::Manager();
 //   BattleShipServiceImpl service(manager);
-
 
 //   // Call health service
 //   builder.RegisterService(&service);
@@ -48,7 +47,8 @@
 
 using ::battleshipservice::BattleShipServiceImpl;
 
-void RunServer() {
+void RunServer()
+{
   // Build the server
   grpc::ServerBuilder builder;
   std::string server_address("0.0.0.0:50051");
@@ -56,8 +56,8 @@ void RunServer() {
 
   // Add services
   grpc::EnableDefaultHealthCheckService(true);
-  battleship::Manager* manager = new battleship::Manager();
-  
+  battleship::Manager *manager = new battleship::Manager();
+
   BattleShipServiceImpl service(manager);
   builder.RegisterService(&service);
 
@@ -65,10 +65,10 @@ void RunServer() {
   std::unique_ptr<grpc::Server> server(builder.BuildAndStart());
   server->Wait();
   // LOG(INFO) << "Server listening on " << server_address;
-
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char **argv)
+{
   RunServer();
   return 0;
 }

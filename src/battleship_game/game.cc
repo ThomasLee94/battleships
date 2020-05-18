@@ -137,6 +137,7 @@ EventResult Game::HandleFireMissile(FireMissileData* data) {
 
 }
 
+
 void Game::Play() {
     // Ask current player to fire missiles in turn until a player wins the game
     while (!IsWon()) {
