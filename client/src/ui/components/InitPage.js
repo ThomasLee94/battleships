@@ -1,5 +1,4 @@
 import React from 'react'
-import JoinGame from './JoinGame'
 import './InitPage.css'
 
 import {

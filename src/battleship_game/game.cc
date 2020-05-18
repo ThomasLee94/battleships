@@ -64,6 +64,10 @@ EventResult Game::HandleEvent(Event* event) {
         return HandleShowShip(static_cast<ShowPlacedShipData*>(event->GetData()));
     }
 
+    if (event->GetType() == EventType::FireMissile) {
+        return HandleFireMissile(static_cast<FireMissileData*>(event->GetData()));
+    }
+
     return EventResult(14, "Event type not available.");
 }
 
@@ -111,6 +115,26 @@ EventResult Game::HandlePollGame() {
         e.AddPlayer(pair.first);
     }
     return e;
+}
+
+EventResult Game::HandleFireMissile(FireMissileData* data) {
+
+    bool is_owner = data->GetPlayerName() == data->GetTargetName();
+    auto pair = player_to_boards.find(data->GetTargetName());
+    Board* board = pair->second.second;
+
+    // check if the player is targeting enemy and not himself
+    if (!is_owner) {
+
+        int x = data->GetX();
+        int y = data->GetY();
+        board->FireMissile(x, y);
+
+        return EventResult(0, "Sucessfully fired missile");
+    }
+
+      return EventResult(7, "You can't fire on your own board");
+
 }
 
 void Game::Play() {

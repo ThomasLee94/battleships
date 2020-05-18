@@ -3,7 +3,7 @@ import Cell from './Cell'
 import './Grid.css'
 
 import {
-  ShowPlacedShipsRequest
+  ShowPlacedShipsRequest, FireMissileRequest
 } from "generated/src/services_pb"
 
 class Grid extends React.Component {
@@ -15,6 +15,7 @@ class Grid extends React.Component {
         cells: [],
     }
     this.ShowBoardRPC()
+    this.FireMissileRPC()
     setInterval(this.ShowBoardRPC.bind(this), 2000)
     }
 
@@ -37,9 +38,7 @@ class Grid extends React.Component {
         console.log(err)
       }
 
-      // console.log("COORDINATES", response.getGridList())
-
-      // for object in coordinates
+  
       let boardLength = response.getGridList().length;
       let rowArray = response.getGridList();
       let cellArray = []
@@ -54,9 +53,11 @@ class Grid extends React.Component {
 
         cells: cellArray.map(row => {
           let cellRow = [];
+          let counter = 0;
           const isOwner = this.props.owner === this.props.player;
           for (let col in row) {
             let style = {};
+            
             console.log(isOwner)
             if (row[col] === -1) {
               style = {backgroundColor: "red", color: ""}
@@ -66,7 +67,8 @@ class Grid extends React.Component {
               style = {backgroundColor: "white"}
             }
 
-              cellRow.push(<Cell type={row[col]} style={{...style}} />)
+              cellRow.push(<Cell x={counter} y={col} fireMissile={this.FireMissileRPC.bind(this)} type={row[col]} style={{...style}} />)
+              counter += 1
           }
           return cellRow;
         })
@@ -77,6 +79,27 @@ class Grid extends React.Component {
     });
     }
 
+    FireMissileRPC(row, col) {
+      const request = new FireMissileRequest();
+      request.setRow(row)
+      request.setCol(col)
+      console.log(row, col)
+    
+      const call = this.props.client.fireMissile(request, {'custom-header-1': 'value1'},
+    (err, response) => {
+      if(err) {
+        console.log(err)
+      }
+      console.log(response.getStatus());
+    });
+    call.on('status', (status) => {
+    // ...
+    });
+      
+      console.log('yeet')
+      return 
+    }
+
     render() {
       
       if (this.props.owner === "") {
@@ -85,7 +108,7 @@ class Grid extends React.Component {
       
       
       return (
-        <div className="Grid">
+        <div className="Grid" >
           {this.state.cells}
         </div>
       )

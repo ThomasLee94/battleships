@@ -27,6 +27,7 @@ class Game {
     EventResult HandlePlayerJoined(PlayerJoinedData* data);
     EventResult HandleShowShip(ShowPlacedShipData* data);
     EventResult HandlePollGame();
+    EventResult HandleFireMissile(FireMissileData* data);
 
   private:
     int num_players_ = 0;
