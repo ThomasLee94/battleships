@@ -10,6 +10,14 @@ cc_library(
     name = "board",
     srcs = ["board.cc"],
     hdrs = ["board.h"],
+    deps = [
+        ":random",
+    ],
+)
+
+cc_library(
+    name = "event",
+    hdrs = ["Event.h"]
 )
 
 cc_library(
@@ -29,7 +37,17 @@ cc_library(
     deps = [
         ":board",
         ":player",
+        ":event"
     ],
+)
+
+cc_library(
+    name = "manager",
+    hdrs = ["manager.h"],
+    deps = [
+        ":game",
+        ":event"
+    ]
 )
 
 cc_binary(

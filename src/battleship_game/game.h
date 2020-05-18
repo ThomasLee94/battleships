@@ -2,15 +2,19 @@
 #define GAME_H_
 
 #include <vector>
+#include <map>
 
 #include "player.h"
 #include "board.h"
+#include "src/battleship_game/Event.h"
 
 namespace battleship {
 
+typedef std::pair<Player*, Board*> PlayerAndBoard;
+typedef std::pair<std::string, PlayerAndBoard> MapNameToData;
+
 class Game {
   public:
-    explicit Game(const int num_players = 2);
     ~Game();
     void Init();
     void Play();
@@ -19,14 +23,19 @@ class Game {
     const bool IsStarted() const;
     const bool IsWon() const;
     const int Winner() const;
+    EventResult HandleEvent(Event* event);
+    EventResult HandlePlayerJoined(PlayerJoinedData* data);
+    EventResult HandleShowShip(ShowPlacedShipData* data);
+    EventResult HandlePollGame();
 
   private:
-    int num_players_;
-    int current_player_;
-    bool is_started_;
-    bool is_won_;
+    int num_players_ = 0;
+    int current_player_ = 0;
+    bool is_started_ = false;
+    bool is_won_ = false;
     std::vector<Player*> players_;
     std::vector<Board*> boards_;
+    std::map<std::string, PlayerAndBoard> player_to_boards;
 };  // class Game
 
 }  // namespace battleship

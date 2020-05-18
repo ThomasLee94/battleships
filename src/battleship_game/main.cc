@@ -7,8 +7,8 @@
 #include "src/battleship_game/player.h"
 #include "src/battleship_game/game.h"
 
+namespace battleship {
 
-using ::battleship;
 
 static const int timestep = 1e6;  // Delay to use when sleeping: 1e6 = 1 second
 
@@ -386,11 +386,13 @@ void TestGame() {
     game.Play();
 }
 
+} // namespace battleship
+
 int main(int argc, const char * argv[]) {
     // TestBoardFixed();
     // TestBoardRandom();
     // TestBoardUser();
     // TestPlayer(board);
     // TestRandomPlayer();
-    TestGame();
+    battleship::TestGame();
 }

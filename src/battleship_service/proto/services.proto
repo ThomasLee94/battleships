@@ -4,19 +4,60 @@ package battleshipservice;
 
 // BoardService
 service BoardService {
+  rpc AddPlayer (AddPlayerRequest) returns (AddPlayerResponse) {}
   rpc FireMissile (FireMissileRequest) returns (FireMissileResponse) {}
-  rpc StreamPlacedShips (ShowPlacedShipsRequest) returns (stream ShowPlacedShipsResponse) {}
+  rpc ShowPlacedShips (ShowPlacedShipsRequest) returns (ShowPlacedShipsResponse) {}
+  rpc CreateGame (CreateGameRequest) returns (CreateGameResponse) {}
+  rpc PollGame (PollGameRequest) returns (PollGameResponse) {}
 }
 
-message ShowPlacedShipsRequest{}
+message CreateGameRequest {
+  string name = 1;
+}
+  
+message CreateGameResponse {
+  string gameId = 1;
+  string message = 2;
+}
+
+message AddPlayerRequest {
+  string gameId = 1;
+  string name = 2;
+}
+
+message AddPlayerResponse {
+  string message = 2;
+}
+
+message Board{
+  repeated int32 board = 1;
+}
+
+message VerticalShip {
+  int32 start = 1;
+  int32 stop = 2;
+  int32 col = 3;
+}
+
+message HorizontalShip {
+  int32 start = 1;
+  int32 stop = 2;
+  int32 row = 3;
+}
+
+message ShowPlacedShipsRequest{
+  string gameId = 1;
+  string currentuser = 2;
+  string targetuser = 3;
+}
+
+message Row {
+  repeated int32 col = 1;
+}
 
 message ShowPlacedShipsResponse{
-  message StreamEvent {
-    int32 col = 1;
-    int32 row = 2;
-  }
-
-  repeated StreamEvent events = 1;
+  string message = 2;
+  repeated Row grid = 1;
 }
 
 message FireMissileRequest{
@@ -26,6 +67,16 @@ message FireMissileRequest{
 
 message FireMissileResponse{
   bool status = 1;
+}
+
+message PollGameRequest {
+  string gameId = 1;
+}
+
+message PollGameResponse {
+  repeated string players = 1;
+  bool isWon = 2;
+
 }
 
 // Game Service

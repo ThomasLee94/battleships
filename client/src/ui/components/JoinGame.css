@@ -1,0 +1,32 @@
+.button{
+    display: inline-block;
+    padding:0.35em 1.2em;
+    border:0.1em solid #FFFFFF;
+    margin:0 0.3em 0.3em 0;
+    border-radius:0.12em;
+    box-sizing: border-box;
+    text-decoration:none;
+    font-family:'Roboto',sans-serif;
+    font-weight:300;
+    text-align:center;
+    transition: all 0.2s;
+  }
+     
+  .button:hover{
+    color:#000000;
+    background-color:blueviolet;
+  }
+  
+  .label {
+    width: 200px;
+    height: 75px;
+    margin: 5px;
+    padding: 5px;
+    border: 5px black;
+  }
+  
+  .input {
+    margin: 3px;
+    padding: 3px;
+  }
+      

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: edge
+  name: edge-envoy
 spec:
-  clusterIP: None
+  type: NodePort
   ports:
   - name: grpc
     protocol: TCP
-    port: 50051
+    port: 8080
   selector:
-    app: edge
+    app: edge-envoy

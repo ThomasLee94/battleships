@@ -69,6 +69,24 @@ go_register_toolchains()
 
 apple_rules_dependencies()
 
+# Docker images
+
+load("@io_bazel_rules_docker//container:pull.bzl", "container_pull")
+
+container_pull(
+    name = "nginx_latest",
+    registry = "index.docker.io",
+    repository = "nginx",
+    tag = "latest",
+)
+
+container_pull(
+    name = "envoy_latest",
+    registry = "index.docker.io",
+    repository = "envoyproxy/envoy",
+    tag = "v1.14.1",
+)
+
 # Install GRPC Proto
 
 http_archive(
@@ -76,6 +94,15 @@ http_archive(
     sha256 = "73c362cb2223d746ce6d22d203babfe8e51be4080549402a72256c2c77b9f58d",
     strip_prefix = "grpc-proto-5ce8e3e598b805a1e0372062913f24b0715fdefc",
     url = "https://github.com/grpc/grpc-proto/archive/5ce8e3e598b805a1e0372062913f24b0715fdefc.zip",
+)
+
+# GFlags
+
+http_archive(
+    name = "com_github_gflags_gflags",
+    sha256 = "63ae70ea3e05780f7547d03503a53de3a7d2d83ad1caaa443a31cb20aea28654",
+    strip_prefix = "gflags-2.2.2",
+    url = "https://github.com/gflags/gflags/archive/v2.2.2.tar.gz",
 )
 
 # GLog
@@ -95,3 +122,11 @@ http_archive(
     strip_prefix = "abseil-cpp-ab3552a18964e7063c8324f45b3896a6a20b08a8",
     url = "https://github.com/abseil/abseil-cpp/archive/ab3552a18964e7063c8324f45b3896a6a20b08a8.zip",
 )
+
+# Exporting bazel compile commands
+http_archive(
+    name = "com_grail_bazel_compdb",
+    strip_prefix = "bazel-compilation-database-master",
+    urls = ["https://github.com/grailbio/bazel-compilation-database/archive/master.tar.gz"],
+)
+

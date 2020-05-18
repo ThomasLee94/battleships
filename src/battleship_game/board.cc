@@ -1,8 +1,27 @@
+#include <unistd.h>  // Need usleep function (Unix systems only: Mac and Linux)
+
 #include "board.h"
+#include "src/battleship_game/random.h"
 
 #include <iostream>
 
 namespace battleship {
+
+int** CreateNewGrid(int rows_, int cols_) {
+    int** grid = new int*[rows_]();
+    for (int row = 0; row < rows_; ++row) {
+        // Initialize each row to an array of ints
+        grid[row] = new int[cols_]();
+        // Need () to initialize grid cells to zero or values will be uninitialized
+        // Code to initialize row adapted from https://stackoverflow.com/a/16239446
+        // Without () above, we need to loop over columns to initialize each cell
+        // for (int col = 0; col < cols_; ++col) {
+        //     // Initialize each cell to zero
+        //     grid_[row][col] = 0;
+        // }
+    }
+    return grid;
+}
 
 Board::Board(const int rows, const int cols)
         : rows_(rows), cols_(cols) {
@@ -12,25 +31,15 @@ Board::Board(const int rows, const int cols)
 
     // Instead we need to initialize an array of pointers to scattered row arrays
     // Code to create 2D array adapted from https://stackoverflow.com/a/936702
-    grid_ = new int*[rows_]();
-    for (int row = 0; row < rows_; ++row) {
-        // Initialize each row to an array of ints
-        grid_[row] = new int[cols_]();
-        // Need () to initialize grid cells to zero or values will be uninitialized
-        // Code to initialize row adapted from https://stackoverflow.com/a/16239446
-        // Without () above, we need to loop over columns to initialize each cell
-        // for (int col = 0; col < cols_; ++col) {
-        //     // Initialize each cell to zero
-        //     grid_[row][col] = 0;
-        // }
-    }
-
+    grid_ = CreateNewGrid(rows_, cols_);
     // It is possible to dynamically allocate a contiguous 2D block of memory
     // where rows and columns vary at runtime and preserve 2-subscript access.
     // Example code found in this answer: https://stackoverflow.com/a/29375830
 
     // Alternative pseudo-2D array solution: https://stackoverflow.com/a/28841507
 }
+
+
 
 Board::~Board() {
     // Code to delete 2D array adapted from https://stackoverflow.com/a/936709
@@ -62,6 +71,7 @@ bool Board::PlaceShipVertical(const int row_start, const int row_end, const int 
     for (int row = row_start; row <= row_end; ++row) {
         grid_[row][col] = 1;
     }
+    
     return true;  // Success
 }
 
@@ -85,6 +95,7 @@ bool Board::PlaceShipHorizontal(const int row, const int col_start, const int co
     for (int col = col_start; col <= col_end; ++col) {
         grid_[row][col] = 1;
     }
+
     return true;  // Success
 }
 
@@ -100,6 +111,26 @@ bool Board::FireMissile(const int row, const int col) {
     grid_[row][col] = -1;
     return false;  // Miss
 }
+
+int** Board::ShowGrid(bool is_owner) {
+    if (is_owner) {
+        return grid_;
+    }
+
+    int** target_grid = CreateNewGrid(rows_, cols_);
+    for (int row = 0; row < rows_; ++row) {
+        for (int col = 0; col < cols_; ++col) {
+            if (grid_[row][col] == -1 ) {
+                target_grid[row][col] = -1;
+            } else {
+                target_grid[row][col] = 0;
+            }
+
+        }       
+    }
+    return target_grid;
+}
+
 
 bool Board::IsInBounds(const int row, const int col) const {
     // Ensure given coordinates are each valid indexes (within bounds of grid)
@@ -178,6 +209,25 @@ void Board::Print() const {
         }
         std::cout << row_str << std::endl;
         std::cout << (row < rows_-1 ? divider : bottom) << std::endl;  // Last row is different
+    }
+}
+
+void Board::PlaceShipsRandom(const int num_ships) {
+    // Place ships at random coordinates
+    RandomGenerator random;
+    int row, col, size, vertical, result, count = 0;
+    std::string orientation;
+    for (int ship = 1; ship <= num_ships; ++ship) {
+        vertical = random.RandomInt(0, 1);  // 0 = horizontal, 1 = vertical
+        size = random.RandomInt(1, (vertical ? Rows() : Cols()));
+        row = random.RandomInt(0, Rows() - (vertical ? size : 1));
+        col = random.RandomInt(0, Cols() - (vertical ? 1 : size));
+        orientation = (vertical ? "vertically" : "horizontally");
+        if (vertical)
+            result = PlaceShipVertical(row, row + size - 1, col);
+        else
+            result = PlaceShipHorizontal(row, col, col + size - 1);
+        count += result;
     }
 }
 
