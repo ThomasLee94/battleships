@@ -3,7 +3,8 @@ import Cell from './Cell'
 import './Grid.css'
 
 import {
-  ShowPlacedShipsRequest
+  ShowPlacedShipsRequest, FireMissileRequest
+
 } from "generated/src/services_pb"
 
 class Grid extends React.Component {
@@ -15,6 +16,7 @@ class Grid extends React.Component {
         cells: [],
     }
     this.ShowBoardRPC()
+    this.FireMissileRPC()
     setInterval(this.ShowBoardRPC.bind(this), 2000)
     }
 
@@ -37,9 +39,6 @@ class Grid extends React.Component {
         console.log(err)
       }
 
-      // console.log("COORDINATES", response.getGridList())
-
-      // for object in coordinates
       let boardLength = response.getGridList().length;
       let rowArray = response.getGridList();
       let cellArray = []
@@ -65,8 +64,8 @@ class Grid extends React.Component {
             } else {
               style = {backgroundColor: "white"}
             }
-
-              cellRow.push(<Cell type={row[col]} style={{...style}} />)
+              cellRow.push(<Cell x={counter} y={col} fireMissile={this.FireMissileRPC.bind(this)} type={row[col]} style={{...style}} />)
+              counter += 1
           }
           return cellRow;
         })
@@ -85,6 +84,7 @@ class Grid extends React.Component {
       
       
       return (
+
         <div className="Grid">
           {this.state.cells}
         </div>

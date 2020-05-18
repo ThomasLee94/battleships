@@ -13,7 +13,9 @@ namespace battleship {
         CreateGame,
         JoinGame,
         ShowPlacedShip,
-        PollGame
+        PollGame,
+        FireMissile
+
     };
 
     class EventData {
@@ -123,6 +125,35 @@ namespace battleship {
             EventType GetType() const override { return EventType::PollGame; }
             void* GetData() override { return nullptr; }
     };
+
+    class FireMissileData : public EventData {
+        public:
+            FireMissileData(int x, int y, std::string player_name, std::string target_name) : x_(x), y_(), player_name_(player_name), target_name_(target_name){};
+            int x_;
+            int y_;
+
+            std::string target_name_;
+            std::string player_name_;
+            std::string GetPlayerName() const { return player_name_; }
+            std::string GetTargetName() const { return target_name_; }
+
+            int GetX() const { return x_; }
+            int GetY() const { return y_; }
+
+    };
+
+    class FireMissileEvent : public Event {
+        public:
+            FireMissileEvent(std::string gameId, int x, int y, std::string player_name, std::string target_name) : Event(gameId) {
+                data_ = new FireMissileData(x, y, player_name, target_name);
+            }
+            EventType GetType() const override { return EventType::FireMissile; }
+            void* GetData() override { return data_; }
+        private:
+            FireMissileData* data_;
+
+    };
+
 
 };
 
