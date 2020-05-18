@@ -4,7 +4,6 @@ import './Grid.css'
 
 import {
   ShowPlacedShipsRequest, FireMissileRequest
-
 } from "generated/src/services_pb"
 
 class Grid extends React.Component {
@@ -16,7 +15,7 @@ class Grid extends React.Component {
         cells: [],
     }
     this.ShowBoardRPC()
-    this.FireMissileRPC()
+    this.FireMissileRPC = this.FireMissileRPC.bind(this) 
     setInterval(this.ShowBoardRPC.bind(this), 2000)
     }
 
@@ -39,6 +38,9 @@ class Grid extends React.Component {
         console.log(err)
       }
 
+      // console.log("COORDINATES", response.getGridList())
+
+      // for object in coordinates
       let boardLength = response.getGridList().length;
       let rowArray = response.getGridList();
       let cellArray = []
@@ -54,6 +56,7 @@ class Grid extends React.Component {
         cells: cellArray.map(row => {
           let cellRow = [];
           const isOwner = this.props.owner === this.props.player;
+          let counter = 0
           for (let col in row) {
             let style = {};
             console.log(isOwner)
@@ -76,6 +79,29 @@ class Grid extends React.Component {
     });
     }
 
+    FireMissileRPC() {
+
+      const request = new FireMissileRequest();
+
+      request.setGameid(this.props.gameID)
+      console.log(this.props.gameID);
+      request.setTargetuser(this.props.owner)
+      request.setCurrentuser(this.props.player)
+      request.setX(this.props.x)
+      request.setY(this.props.y)
+    
+      const call = this.props.client.fireMissile(request, {'custom-header-1': 'value1'},
+    (err, response) => {
+      if(err) {
+        console.log(err)
+      }
+    
+    });
+    call.on('status', (status) => {
+      console.log("STATUS FOR FIRE MISSILE RPC ---------------", status)
+    });
+    }
+
     render() {
       
       if (this.props.owner === "") {
@@ -84,7 +110,6 @@ class Grid extends React.Component {
       
       
       return (
-
         <div className="Grid">
           {this.state.cells}
         </div>

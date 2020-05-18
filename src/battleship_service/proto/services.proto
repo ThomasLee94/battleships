@@ -61,8 +61,11 @@ message ShowPlacedShipsResponse{
 }
 
 message FireMissileRequest{
-  int32 col = 1;
-  int32 row = 2;
+  string gameId = 1;
+  string currentuser = 2;
+  string targetuser = 3;
+  int32 x = 4;
+  int32 y = 5;
 }
 
 message FireMissileResponse{

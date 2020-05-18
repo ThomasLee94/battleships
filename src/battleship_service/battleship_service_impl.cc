@@ -65,10 +65,15 @@ grpc::Status BattleShipServiceImpl::FireMissile(
     const ::battleshipservice::FireMissileRequest* request,
     ::battleshipservice::FireMissileResponse* response) {
 
-        battleship::FireMissileEvent e(x, y, player_name, target_name);  
+        std::string id = request->gameid();
+        std::string player_name = request->currentuser();
+        std::string target_name = request->targetuser();
+        int x = request->x();
+        int y = request->y();
+
+        battleship::FireMissileEvent e(id, x, y, player_name, target_name);  
         battleship::EventResult result = manager_->HandleEvent(&e);
 
-        // bool status = board->FireMissile(col, row);
         response->set_status(true);
         return grpc::Status::OK;
 }

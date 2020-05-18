@@ -52,7 +52,8 @@ void RunServer()
   // Build the server
   grpc::ServerBuilder builder;
   std::string server_address("0.0.0.0:50051");
-  builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+  // builder.AddListeningPort(server_address, grpc::InsecureServerCredentials());
+  builder.AddListeningPort("localhost:9090", grpc::InsecureServerCredentials());
 
   // Add services
   grpc::EnableDefaultHealthCheckService(true);

@@ -1805,8 +1805,11 @@ proto.battleshipservice.FireMissileRequest.prototype.toObject = function(opt_inc
  */
 proto.battleshipservice.FireMissileRequest.toObject = function(includeInstance, msg) {
   var f, obj = {
-    col: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    row: jspb.Message.getFieldWithDefault(msg, 2, 0)
+    gameid: jspb.Message.getFieldWithDefault(msg, 1, ""),
+    currentuser: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    targetuser: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    x: jspb.Message.getFieldWithDefault(msg, 4, 0),
+    y: jspb.Message.getFieldWithDefault(msg, 5, 0)
   };
 
   if (includeInstance) {
@@ -1844,12 +1847,24 @@ proto.battleshipservice.FireMissileRequest.deserializeBinaryFromReader = functio
     var field = reader.getFieldNumber();
     switch (field) {
     case 1:
-      var value = /** @type {number} */ (reader.readInt32());
-      msg.setCol(value);
+      var value = /** @type {string} */ (reader.readString());
+      msg.setGameid(value);
       break;
     case 2:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCurrentuser(value);
+      break;
+    case 3:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setTargetuser(value);
+      break;
+    case 4:
       var value = /** @type {number} */ (reader.readInt32());
-      msg.setRow(value);
+      msg.setX(value);
+      break;
+    case 5:
+      var value = /** @type {number} */ (reader.readInt32());
+      msg.setY(value);
       break;
     default:
       reader.skipField();
@@ -1880,17 +1895,38 @@ proto.battleshipservice.FireMissileRequest.prototype.serializeBinary = function(
  */
 proto.battleshipservice.FireMissileRequest.serializeBinaryToWriter = function(message, writer) {
   var f = undefined;
-  f = message.getCol();
-  if (f !== 0) {
-    writer.writeInt32(
+  f = message.getGameid();
+  if (f.length > 0) {
+    writer.writeString(
       1,
       f
     );
   }
-  f = message.getRow();
+  f = message.getCurrentuser();
+  if (f.length > 0) {
+    writer.writeString(
+      2,
+      f
+    );
+  }
+  f = message.getTargetuser();
+  if (f.length > 0) {
+    writer.writeString(
+      3,
+      f
+    );
+  }
+  f = message.getX();
   if (f !== 0) {
     writer.writeInt32(
-      2,
+      4,
+      f
+    );
+  }
+  f = message.getY();
+  if (f !== 0) {
+    writer.writeInt32(
+      5,
       f
     );
   }
@@ -1898,32 +1934,77 @@ proto.battleshipservice.FireMissileRequest.serializeBinaryToWriter = function(me
 
 
 /**
- * optional int32 col = 1;
- * @return {number}
+ * optional string gameId = 1;
+ * @return {string}
  */
-proto.battleshipservice.FireMissileRequest.prototype.getCol = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 1, 0));
+proto.battleshipservice.FireMissileRequest.prototype.getGameid = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 1, ""));
 };
 
 
-/** @param {number} value */
-proto.battleshipservice.FireMissileRequest.prototype.setCol = function(value) {
-  jspb.Message.setProto3IntField(this, 1, value);
+/** @param {string} value */
+proto.battleshipservice.FireMissileRequest.prototype.setGameid = function(value) {
+  jspb.Message.setProto3StringField(this, 1, value);
 };
 
 
 /**
- * optional int32 row = 2;
+ * optional string currentuser = 2;
+ * @return {string}
+ */
+proto.battleshipservice.FireMissileRequest.prototype.getCurrentuser = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
+};
+
+
+/** @param {string} value */
+proto.battleshipservice.FireMissileRequest.prototype.setCurrentuser = function(value) {
+  jspb.Message.setProto3StringField(this, 2, value);
+};
+
+
+/**
+ * optional string targetuser = 3;
+ * @return {string}
+ */
+proto.battleshipservice.FireMissileRequest.prototype.getTargetuser = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
+};
+
+
+/** @param {string} value */
+proto.battleshipservice.FireMissileRequest.prototype.setTargetuser = function(value) {
+  jspb.Message.setProto3StringField(this, 3, value);
+};
+
+
+/**
+ * optional int32 x = 4;
  * @return {number}
  */
-proto.battleshipservice.FireMissileRequest.prototype.getRow = function() {
-  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 2, 0));
+proto.battleshipservice.FireMissileRequest.prototype.getX = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 4, 0));
 };
 
 
 /** @param {number} value */
-proto.battleshipservice.FireMissileRequest.prototype.setRow = function(value) {
-  jspb.Message.setProto3IntField(this, 2, value);
+proto.battleshipservice.FireMissileRequest.prototype.setX = function(value) {
+  jspb.Message.setProto3IntField(this, 4, value);
+};
+
+
+/**
+ * optional int32 y = 5;
+ * @return {number}
+ */
+proto.battleshipservice.FireMissileRequest.prototype.getY = function() {
+  return /** @type {number} */ (jspb.Message.getFieldWithDefault(this, 5, 0));
+};
+
+
+/** @param {number} value */
+proto.battleshipservice.FireMissileRequest.prototype.setY = function(value) {
+  jspb.Message.setProto3IntField(this, 5, value);
 };
 
 
